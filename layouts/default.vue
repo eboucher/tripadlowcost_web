@@ -10,13 +10,10 @@
 
 
 <script>
-  import Navbar from '~/components/Navbar'
-  import MainFooter from '~/components/MainFooter'
-
   export default {
     components: {
-      Navbar,
-      MainFooter
+      Navbar: () => import('~/components/Navbar'),
+      MainFooter: () => import('~/components/MainFooter')
     }
   }
 </script>
