@@ -1,32 +1,28 @@
 {
-  "name": "web_pa_esgi_2019",
-  "version": "1.0.0",
-  "description": "Nuxt.js project",
-  "author": "nathan bessa <nathan.besssa@gmail.com>",
+  "name": "tripadlowcost_web",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "precommit": "npm run lint"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@nuxtjs/auth": "^4.5.3",
-    "@nuxtjs/axios": "^5.4.1",
-    "@nuxtjs/dotenv": "^1.3.0",
-    "dotenv": "^8.0.0",
-    "nuxt": "^2.9.2",
-    "vue-nav-tabs": "^0.5.7",
-    "vue2-google-maps": "^0.10.7"
+    "core-js": "^2.6.5",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.0.0-beta.3",
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
+    "@vue/eslint-config-prettier": "^5.0.0",
     "babel-eslint": "^10.0.1",
-    "eslint": "^4.19.1",
-    "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^2.1.1",
-    "eslint-plugin-vue": "^4.0.0"
+    "eslint": "^5.16.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "prettier": "^1.18.2",
+    "vue-template-compiler": "^2.6.10"
   }
 }
