@@ -1,126 +1,115 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <div class="columns">
-        <div class="column is-4 is-offset-4">
-          <h2 class="title has-text-centered">Register!</h2>
+	<v-layout column align-center justify-center>
+      <v-toolbar-title>Register</v-toolbar-title>
+      <v-form @submit.prevent="register"
+        ref="form"
+        v-model="valid"
+        lazy-validation
+      >
+        <v-text-field
+          v-model="name"
+          :counter="10"
+          :rules="[nameRules, rules.required]"
+          label="Username"
+          required
+        ></v-text-field>
+        
+        <v-text-field
+          v-model="name"
+          :counter="10"
+          :rules="[nameRules, rules.required]"
+          label="First name"
+          required
+        ></v-text-field>
+        
+        <v-text-field
+          v-model="name"
+          :counter="10"
+          :rules="[nameRules, rules.required]"
+          label="Last name"
+          required
+        ></v-text-field>
+    
+        <v-text-field
+          v-model="email"
+          :rules="[emailRules, rules.required]"
+          label="E-mail"
+          required
+        ></v-text-field>
+        
+        <v-text-field
+          v-model="name"
+          :counter="10"
+          :rules="nameRules"
+          label="Adress"
+          adress-icon="place"
+          required
+        ></v-text-field>
+        
+        <v-text-field
+          v-model="name"
+          :counter="10"
+          :rules="nameRules"
+          label="Phone number"
+          required
+        ></v-text-field>
 
-          <Notification :message="error" v-if="error"/>
+        <v-text-field
+          v-model="password"
+          :append-icon="show1 ? 'visibility' : 'visibility_off'"
+          :rules="[rules.required, rules.min]"
+          :type="show1 ? 'text' : 'password'"
+          name="input-10-1"
+          label="Password"
+          @click:append="show1 = !show1"
+        ></v-text-field>
 
-          <form method="post" @submit.prevent="register">
-            <div class="field">
-              <label class="label">Username *</label>
-              <div class="control">
-                <input
-                  @keydown.space.prevent
-                  type="text"
-                  class="input"
-                  name="username"
-                  v-model="username"
-                  required
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Lastname *</label>
-              <div class="control">
-                <input
-                  type="text"
-                  class="input"
-                  name="lastname"
-                  v-model="lastname"
-                  required
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Firstname *</label>
-              <div class="control">
-                <input
-                  type="text"
-                  class="input"
-                  name="firstname"
-                  v-model="firstname"
-                  required
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Email *</label>
-              <div class="control">
-                <input
-                  @keydown.space.prevent
-                  type="email"
-                  class="input"
-                  name="email"
-                  v-model="email"
-                  required
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Adress</label>
-              <div class="control">
-                <input
-                  type="text"
-                  class="input"
-                  name="adress"
-                  v-model="adress"
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Phone number</label>
-              <div class="control">
-                <input
-                  type="tel"
-                  class="input"
-                  name="phone"
-                  v-model="phone"
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Password *</label>
-              <div class="control">
-                <input
-                  type="password"
-                  class="input"
-                  name="password"
-                  v-model="password"
-                  required
-                >
-              </div>
-            </div>
-            <div class="field">
-              <label class="label">Confirm password *</label>
-              <div class="control">
-                <input
-                  type="password"
-                  class="input"
-                  name="password"
-                  v-model="confirmPassword"
-                  required
-                >
-              </div>
-            </div>
-            <input type="checkbox" id="checkbox" v-model="checked">
-            <label for="checkbox">Do you accept our  <nuxt-link to="/about/terms-and-conditions">terms & conditions ?</nuxt-link></label>
-            <div class="control">
-              <button type="submit" class="button is-dark is-fullwidth">Register</button>
-            </div>
-          </form>
-          <div class="has-text-centered" style="margin-top: 20px">
-            Already got an account? <nuxt-link to="/login">Login</nuxt-link>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <v-text-field
+          v-model="confirmPassword"
+          :append-icon="show1 ? 'visibility' : 'visibility_off'"
+          :rules="[rules.required, rules.min]"
+          :type="show1 ? 'text' : 'password'"
+          name="input-10-2"
+          label="Confirm password"
+          @click:append="show1 = !show1"
+        ></v-text-field>
+    
+        <v-checkbox
+          v-model="checkbox"
+          :rules="[v => !!v || 'You must agree to continue!']"
+          label="Do you agree?"
+          required
+        ></v-checkbox>
+    
+        <v-btn
+          :disabled="!valid"
+          color="success"
+          class="mr-4"
+          @click="validate"
+        >
+          Validate
+        </v-btn>
+    
+        <v-btn
+          color="error"
+          class="mr-4"
+          @click="reset"
+        >
+          Reset Form
+        </v-btn>
+    
+        <v-btn
+          color="warning"
+          @click="resetValidation"
+        >
+          Reset Validation
+        </v-btn>
+      </v-form>
+  </v-layout>
 </template>
 
 <script>
-  import Notification from '~/components/Notification'
+  import Notification from '@/components/base/Notification'
 
   export default {
     middleware: 'guest',
@@ -139,8 +128,17 @@
         adress: '',
         phone: '',
         checked: '',
-        error: null
-      }
+        error: null,
+        
+        show1: false,
+        show2: false,
+        password: '',
+        confirmPassword: '',
+        rules: {
+          required: value => !!value || 'Required',
+          min: v => v.length >= 6 || 'Min 6 characters',
+        },
+    }
     },
 
     methods: {
@@ -175,7 +173,13 @@
         } catch (e) {
           this.error = e.response.data.message
         }
-      }
+      },
+      reset() {
+        this.$refs.form.reset()
+      },
+      resetValidation () {
+        this.$refs.form.resetValidation()
+      },
     }
   }
 </script>

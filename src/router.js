@@ -42,9 +42,15 @@ export default new Router({
     },
     {
       path: "/about/terms-and-conditions",
-      name: "/about-terms-and-conditions",
+      name: "about-terms-and-conditions",
       component: () =>
         import("./views/about/TermsAndConditions.vue")
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: () =>
+        import("./views/authentication/Register.vue")
     }
   ]
 });

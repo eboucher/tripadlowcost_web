@@ -187,7 +187,7 @@
 </template>
 
 <script>
-  import Notification from '~/components/Notification'
+  import Notification from '@/components/base/Notification'
 
   export default {
     middleware: 'auth',
