@@ -20,7 +20,31 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+        import(/* webpackChunkName: "about" */ "./views/about/AboutUs.vue")
+    },
+    {
+      path: "/about/cookie-consent",
+      name: "about-cookie-consent",
+      component: () =>
+        import("./views/about/CookieConsent.vue")
+    },
+    {
+      path: "/about/cookie-policy",
+      name: "about-cookie-policy",
+      component: () =>
+        import("./views/about/CookiePolicy.vue")
+    },
+    {
+      path: "/about/privacy-policy",
+      name: "about-privacy-policy",
+      component: () =>
+        import("./views/about/PrivacyPolicy.vue")
+    },
+    {
+      path: "/about/terms-and-conditions",
+      name: "/about-terms-and-conditions",
+      component: () =>
+        import("./views/about/TermsAndConditions.vue")
     }
   ]
 });
