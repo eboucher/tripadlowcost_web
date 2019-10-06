@@ -80,25 +80,8 @@
     },
 
     methods: {
-      /*
-      async login() {
-        try {
-          await this.$auth.loginWith('local', {
-            data: {
-              identifier: this.username,
-              password: this.password
-            }
-          })
-        } catch (e) {
-          this.error = e.response.data.message
-        }
-      },
-      */
      login() {
-       this.$store.dispatch('retrieveToken', {
-         username: this.username,
-         password: this.password,
-       })
+       
      },
 
       reset() {

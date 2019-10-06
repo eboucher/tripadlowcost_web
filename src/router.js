@@ -1,10 +1,5 @@
 import Vue from "vue";
 import Router from "vue-router";
- 
-import auth from './middleware/auth';
-import log from './middleware/log';
-
-import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
@@ -15,10 +10,8 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Home,
-        meta: {
-        middleware: log,
-      },
+      component: () =>
+        import("./views/Home.vue")
     },
     {
       path: "/about",
@@ -55,24 +48,6 @@ export default new Router({
       name: "login",
       component: () =>
         import("./views/auth/Login.vue")
-    },
-    {
-      path: "/trips",
-      name: "trips",
-      component: () =>
-        import("./views/trips/index.vue"),
-        meta: {
-        middleware: log,
-      },
-    },
-    {
-      path: "/profile/:id",
-      name: "profile-id",
-      component: () =>
-        import("./views/profile/_id.vue"),
-        meta: {
-        middleware: log,
-      },
     }
   ],
 });

@@ -110,7 +110,6 @@
   import Notification from '@/components/base/Notification'
 
   export default {
-    middleware: 'guest',
     components: {
       Notification,
     },
@@ -150,35 +149,7 @@
     },
 
     methods: {
-      async register() {
-        if(this.password !== this.confirmPassword) {
-          this.error = "Passwords don't match."
-          return
-        }
-        if(!this.checked){
-          this.error = "Please accept our terms & condtions."
-          return
-        }
-        try {
-          await this.$axios.post('/auth/local/register', {
-            username: this.username,
-            email: this.email,
-            password: this.password,
-            adress: this.adress,
-            phone: this.phone,
-            lastname: this.lastname,
-            firstname: this.firstname
-          })
-          await this.$auth.loginWith('local', {
-            data: {
-              identifier: this.username,
-              password: this.password
-            }
-          })
-          this.$router.push('/')
-        } catch (e) {
-          this.error = e.response.data.message
-        }
+      register() {
       },
 
       reset() {
