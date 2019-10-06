@@ -9,12 +9,12 @@
     <v-divider></v-divider>
         <div class="text-xs-center">
           <p>{{formatDate(trip.start)}} || {{formatDate(trip.end)}}</p>
-          <p>Author : <nuxt-link :to="'/profile/' + trip.user.id">{{ trip.user.username }}
+          <p>Author : <router-link :to="'/profile/' + trip.user.id">{{ trip.user.username }}
             <v-avatar>
               <img v-if="trip.user.picture" class="profilepic" :src="trip.user.picture.url" >
               <img v-else class="profilepic" src="../../../static/defaultpic.png" alt= "profile">
             </v-avatar>
-          </nuxt-link>
+          </router-link>
           </p>
           {{ this.likes }}
           <v-btn v-if="loggedInUser && !this.liked" v-on:click.native="like" color="primary">Like</v-btn>
@@ -37,14 +37,14 @@
             <template v-slot:opposite>
               <span>{{ formatDate(etape.start) }}</span>
             </template>
-            <nuxt-link :to="'/trips/' + trip.id + '/' + etape.id">
+            <router-link :to="'/trips/' + trip.id + '/' + etape.id">
             <v-card class="elevation-2">
               <v-card-title class="headline">{{ etape.title }}</v-card-title>
               <v-card-text>
                 {{ etape.comment }}
               </v-card-text>
             </v-card>
-            </nuxt-link>
+            </router-link>
           </v-timeline-item>
         </v-timeline>
     </v-flex>

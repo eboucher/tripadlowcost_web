@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Trip from '@/components/Trip'
+import Trip from '@/components/base/Trip'
 
 export default {
   components: {

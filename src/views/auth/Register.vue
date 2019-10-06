@@ -7,7 +7,7 @@
         lazy-validation
       >
         <v-text-field
-          v-model="name"
+          v-model="username"
           :counter="10"
           :rules="[nameRules, rules.required]"
           label="Username"
@@ -15,7 +15,7 @@
         ></v-text-field>
         
         <v-text-field
-          v-model="name"
+          v-model="firstname"
           :counter="10"
           :rules="[nameRules, rules.required]"
           label="First name"
@@ -23,7 +23,7 @@
         ></v-text-field>
         
         <v-text-field
-          v-model="name"
+          v-model="lastname"
           :counter="10"
           :rules="[nameRules, rules.required]"
           label="Last name"
@@ -38,7 +38,7 @@
         ></v-text-field>
         
         <v-text-field
-          v-model="name"
+          v-model="adress"
           :counter="10"
           :rules="nameRules"
           label="Adress"
@@ -47,7 +47,7 @@
         ></v-text-field>
         
         <v-text-field
-          v-model="name"
+          v-model="phone"
           :counter="10"
           :rules="nameRules"
           label="Phone number"
@@ -161,22 +161,22 @@
             lastname: this.lastname,
             firstname: this.firstname
           })
-
           await this.$auth.loginWith('local', {
             data: {
               identifier: this.username,
               password: this.password
             }
           })
-
           this.$router.push('/')
         } catch (e) {
           this.error = e.response.data.message
         }
       },
+
       reset() {
         this.$refs.form.reset()
       },
+      
       resetValidation () {
         this.$refs.form.resetValidation()
       },

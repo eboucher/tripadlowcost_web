@@ -1,5 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
+ 
+import auth from './middleware/auth';
+import log from './middleware/log';
+
 import Home from "./views/Home.vue";
 
 Vue.use(Router);
@@ -11,7 +15,10 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
+        meta: {
+        middleware: log,
+      },
     },
     {
       path: "/about",
@@ -20,7 +27,7 @@ export default new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/about/AboutUs.vue")
+        import("./views/about/AboutUs.vue")
     },
     {
       path: "/about/cookie-consent",
@@ -50,7 +57,31 @@ export default new Router({
       path: "/register",
       name: "register",
       component: () =>
-        import("./views/authentication/Register.vue")
+        import("./views/auth/Register.vue")
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: () =>
+        import("./views/auth/Login.vue")
+    },
+    {
+      path: "/trips",
+      name: "trips",
+      component: () =>
+        import("./views/trips/index.vue"),
+        meta: {
+        middleware: log,
+      },
+    },
+    {
+      path: "/profile/:id",
+      name: "profile-id",
+      component: () =>
+        import("./views/profile/_id.vue"),
+        meta: {
+        middleware: log,
+      },
     }
-  ]
+  ],
 });
