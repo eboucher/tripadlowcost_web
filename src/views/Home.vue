@@ -1,12 +1,22 @@
 <template>
+<div>
+  {{isAuth}}
+</div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
 
   export default {
     name: "Home",
-    computed: {},
+    data: () => {
+      return {
+      };
+    },
+    computed: {
+      isAuth() {
+        return this.$store.getters.isAuthenticated;
+      }
+    },
     components: {},
   };
 </script>

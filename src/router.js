@@ -17,25 +17,29 @@ export default new Router({
       path: "/about",
       name: "about",
       component: () =>
-        import("./views/about/AboutUs.vue")
-    },
-    {
-      path: "/about/cookie-policy",
-      name: "about-cookie-policy",
-      component: () =>
-        import("./views/about/CookiePolicy.vue")
-    },
-    {
-      path: "/about/privacy-policy",
-      name: "about-privacy-policy",
-      component: () =>
-        import("./views/about/PrivacyPolicy.vue")
-    },
-    {
-      path: "/about/terms-and-conditions",
-      name: "about-terms-and-conditions",
-      component: () =>
-        import("./views/about/TermsAndConditions.vue")
+        import("./views/about/About.vue"),
+      children: [
+        {
+          path: "",
+          name: "AboutUs",
+          component: () => import("./views/about/AboutUs.vue"),
+        },
+        {
+          path: 'privacy-policy',
+          name: "PrivacyPolicy",
+          component: () => import("./views/about/PrivacyPolicy.vue"),
+        },
+        {
+          path: 'terms-and-conditions',
+          name: "TermsAndConditions",
+          component: () => import("./views/about/TermsAndConditions.vue"),
+        },
+        {
+          path: 'cookie-policy',
+          name: "CookiePolicy",
+          component: () => import("./views/about/CookiePolicy.vue"),
+        }
+      ]
     },
     {
       path: "/register",

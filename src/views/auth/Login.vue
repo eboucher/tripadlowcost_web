@@ -1,9 +1,5 @@
 <template>
 	<v-layout column align-center justify-center>
-    <v-toolbar-title>
-      Log in to TripadLowCost
-    </v-toolbar-title>
-
     <Notification :message="error" v-if="error"/>
     <v-form 
       @submit.prevent="login"
@@ -28,7 +24,6 @@
       ></v-text-field>
   
       <v-btn
-        :disabled="!valid"
         type="submit"
         color="success"
         class="mr-4"
@@ -81,8 +76,11 @@
 
     methods: {
      login() {
-       
-     },
+       this.$store.dispatch("login", {
+         username: this.username, 
+         password: this.password
+        });
+      },
 
       reset() {
         this.$refs.form.reset()
