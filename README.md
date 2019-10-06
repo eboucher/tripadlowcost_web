@@ -1,4 +1,4 @@
-# tripadlowcost_web
+# TripadLowCost Website
 
 ## Project setup
 ```
