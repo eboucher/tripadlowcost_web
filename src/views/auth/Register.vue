@@ -1,15 +1,15 @@
 <template>
 	<v-layout column align-center justify-center>
       <v-toolbar-title>Register</v-toolbar-title>
-      <v-form @submit.prevent="register"
-        ref="form"
+      <v-form 
+        @submit.prevent="register"
         v-model="valid"
-        lazy-validation
+        ref="form"
       >
         <v-text-field
           v-model="username"
           :counter="10"
-          :rules="[nameRules, rules.required]"
+          :rules="[rules.usernameRules, rules.required]"
           label="Username"
           required
         ></v-text-field>
@@ -17,7 +17,7 @@
         <v-text-field
           v-model="firstname"
           :counter="10"
-          :rules="[nameRules, rules.required]"
+          :rules="[rules.required]"
           label="First name"
           required
         ></v-text-field>
@@ -25,14 +25,14 @@
         <v-text-field
           v-model="lastname"
           :counter="10"
-          :rules="[nameRules, rules.required]"
+          :rules="rules.required"
           label="Last name"
           required
         ></v-text-field>
     
         <v-text-field
           v-model="email"
-          :rules="[emailRules, rules.required]"
+          :rules="[rules.emailRules, rules.required]"
           label="E-mail"
           required
         ></v-text-field>
@@ -40,7 +40,6 @@
         <v-text-field
           v-model="adress"
           :counter="10"
-          :rules="nameRules"
           label="Adress"
           adress-icon="place"
           required
@@ -49,7 +48,6 @@
         <v-text-field
           v-model="phone"
           :counter="10"
-          :rules="nameRules"
           label="Phone number"
           required
         ></v-text-field>
@@ -85,7 +83,7 @@
           :disabled="!valid"
           color="success"
           class="mr-4"
-          @click="validate"
+          @click="register"
         >
           Validate
         </v-btn>
@@ -134,11 +132,21 @@
         show2: false,
         password: '',
         confirmPassword: '',
+        checkbox: false,
         rules: {
           required: value => !!value || 'Required',
           min: v => v.length >= 6 || 'Min 6 characters',
+          usernameRules: [
+            v => !!v || 'Name is required',
+            v => (v && v.length < 4) || 'Username must be at least 4 characters',
+            v => (v && v.length <= 10) || 'Username must be less than 10 characters',
+          ],
+          emailRules: [
+            v => !!v || 'E-mail is required',
+            v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+          ],
         },
-    }
+      }
     },
 
     methods: {

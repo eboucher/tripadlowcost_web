@@ -39,14 +39,6 @@
         >
         Cookie Policy
         </v-btn>
-        <v-btn href="/about/cookie-consent"
-          color="white"
-          text
-          rounded
-          class="my-2"
-        >
-        Cookie Consent
-        </v-btn>
         <v-col
           class="primary lighten-2 py-4 text-center white--text"
           cols="12"

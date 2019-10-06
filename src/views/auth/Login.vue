@@ -7,23 +7,20 @@
     <Notification :message="error" v-if="error"/>
     <v-form 
       @submit.prevent="login"
-      method="post"
       ref="form"
-      v-model="valid"
-      lazy-validation
     >
       <v-text-field
         v-model="username"
         :counter="10"
-        :rules="[nameRules, rules.required]"
+        :rules="[rules.required]"
         label="Username"
         required
       ></v-text-field>
 
       <v-text-field
         v-model="password"
-        :append-icon="show1 ? 'visibility' : 'visibility_off'"
-        :rules="[rules.required, rules.min]"
+        :append-icon="show ? 'visibility' : 'visibility_off'"
+        :rules="[rules.required]"
         :type="show ? 'text' : 'password'"
         name="password"
         label="Password"
@@ -32,10 +29,10 @@
   
       <v-btn
         :disabled="!valid"
+        type="submit"
         color="success"
         class="mr-4"
-        type="submit"
-        @click="validate"
+        @click.native="login"
       >
         Log In
       </v-btn>
@@ -63,7 +60,7 @@
   import Notification from '@/components/base/Notification'
 
   export default {
-    middleware: 'guest',
+    name: 'login',
     components: {
       Notification,
     },
@@ -83,6 +80,7 @@
     },
 
     methods: {
+      /*
       async login() {
         try {
           await this.$auth.loginWith('local', {
@@ -95,6 +93,13 @@
           this.error = e.response.data.message
         }
       },
+      */
+     login() {
+       this.$store.dispatch('retrieveToken', {
+         username: this.username,
+         password: this.password,
+       })
+     },
 
       reset() {
         this.$refs.form.reset()

@@ -1,3 +1,5 @@
+// THIS FILE IS NOT READ, IT DOESN'T WORK! :S
+
 export const state = () => ({
     posts: []
 })

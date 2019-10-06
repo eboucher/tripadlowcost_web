@@ -10,8 +10,8 @@
   export default {
     name: "App",
     components: {
-      CoreFooter: () => import("@/components/core/Footer"),
-      CoreToolbar: () => import("@/components/core/Toolbar")
+      CoreToolbar: () => import("@/components/core/Toolbar"),
+      CoreFooter: () => import("@/components/core/Footer")
     },
     data() {
       return {

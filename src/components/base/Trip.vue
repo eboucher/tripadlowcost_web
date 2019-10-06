@@ -51,7 +51,7 @@ export default {
       }
     else
       return {
-        picture: './../static/defaultpic.png'
+        picture: '@/assets/defaultpic.png'
       }
   }
 }
