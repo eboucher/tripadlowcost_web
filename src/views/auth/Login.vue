@@ -7,7 +7,6 @@
     >
       <v-text-field
         v-model="username"
-        :counter="10"
         :rules="[rules.required]"
         label="Username"
         required
@@ -75,10 +74,10 @@
     },
 
     methods: {
-     login() {
-       this.$store.dispatch("login", {
-         username: this.username, 
-         password: this.password
+      login() {
+        this.$store.dispatch("login", {
+          username: this.username,
+          password: this.password
         });
       },
 
