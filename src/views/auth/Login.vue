@@ -79,6 +79,8 @@
           username: this.username,
           password: this.password
         });
+        
+        this.$router.push({ name: "Home" });
       },
 
       reset() {

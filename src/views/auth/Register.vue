@@ -151,6 +151,8 @@
           adress: this.adress,
           phone: this.phone
         });
+        
+        this.$router.push({ name: "Home" });
       },
 
       reset() {

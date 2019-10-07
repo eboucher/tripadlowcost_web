@@ -25,10 +25,8 @@ export default new Vuex.Store({
         identifier: userInfos.username,
         password: userInfos.password
       }).then(response => {
-        console.log(response);
+        commit('setToken', response);
       })
-
-      commit('setToken', token);
     },
     
     async register({commit, state}, userInfos) {
@@ -46,6 +44,7 @@ export default new Vuex.Store({
       })
 
       commit('setToken', token);
+      router.push({ name: home});
     }
   },
   
