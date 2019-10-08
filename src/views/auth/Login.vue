@@ -1,6 +1,7 @@
 <template>
 	<v-layout column align-center justify-center>
     <Notification :message="error" v-if="error"/>
+    <v-toolbar-title>Log in</v-toolbar-title>
     <v-form 
       @submit.prevent="login"
       ref="form"

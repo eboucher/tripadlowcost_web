@@ -8,6 +8,7 @@
         <v-text-field
           v-model="username"
           :counter="10"
+          :rules="[nameRules, rules.required]"
           label="Username"
           required
         ></v-text-field>
@@ -102,6 +103,7 @@
   import Notification from '@/components/base/Notification'
 
   export default {
+    name: 'register',
     components: {
       Notification,
     },
@@ -142,17 +144,29 @@
 
     methods: {
       register() {
-        this.$store.dispatch("register", {
+        if(this.password !== this.confirmPassword) {
+          this.error = "Passwords don't match."
+          return
+        }
+        try {
+          this.$store.dispatch("register", {
+            username: this.username,
+            email: this.email,
+            password: this.password,
+            adress: this.adress,
+            phone: this.phone,
+            lastname: this.lastname,
+            firstname: this.firstname
+          }),
+
+          this.$store.dispatch("login", {
           username: this.username,
-          firstname: this.firstname,
-          lastname: this.lastname,
-          email: this.email,
-          password: this.password,
-          adress: this.adress,
-          phone: this.phone
+          password: this.password
         });
-        
-        this.$router.push({ name: "Home" });
+
+      } catch (e) {
+          this.error = e.response.data.message
+        }
       },
 
       reset() {

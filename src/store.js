@@ -32,7 +32,7 @@ export default new Vuex.Store({
     async register({commit, state}, userInfos) {
 
       axios.post(`https://dev-tripadlowcost.herokuapp.com/auth/local/register`, {
-        username: userInfos.username,
+        identifier: userInfos.username,
         firstname: userInfos.firstname,
         lastname: userInfos.lastname,
         email: userInfos.email,
@@ -40,11 +40,8 @@ export default new Vuex.Store({
         adress: userInfos.adress,
         phone: userInfos.phone
       }).then(response => {
-        console.log(response);
+        commit('setToken', response);
       })
-
-      commit('setToken', token);
-      router.push({ name: home});
     }
   },
   
