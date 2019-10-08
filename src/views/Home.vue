@@ -1,6 +1,7 @@
 <template>
 <div>
-  {{isAuth}}
+  {{isAuthenticated}}
+  {{loggedUser.username}}
 </div>
 </template>
 
@@ -13,8 +14,16 @@
       };
     },
     computed: {
-      isAuth() {
+      isAuthenticated() {
         return this.$store.getters.isAuthenticated;
+      },
+
+      loggedUser() {
+        if(this.$store.getters.isAuthenticated) {
+          return this.$store.getters.loggedUser;
+        } else {
+          return "User not found";
+        }
       }
     },
     components: {},
