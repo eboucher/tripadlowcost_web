@@ -1,17 +1,13 @@
 <template>
 	<v-layout column align-center justify-center>
-    <v-toolbar-title>
-      Log in to TripadLowCost
-    </v-toolbar-title>
-
     <Notification :message="error" v-if="error"/>
+    <v-toolbar-title>Log in</v-toolbar-title>
     <v-form 
       @submit.prevent="login"
       ref="form"
     >
       <v-text-field
         v-model="username"
-        :counter="10"
         :rules="[rules.required]"
         label="Username"
         required
@@ -28,7 +24,6 @@
       ></v-text-field>
   
       <v-btn
-        :disabled="!valid"
         type="submit"
         color="success"
         class="mr-4"
@@ -80,9 +75,14 @@
     },
 
     methods: {
-     login() {
-       
-     },
+      login() {
+        this.$store.dispatch("login", {
+          username: this.username,
+          password: this.password
+        });
+        
+        this.$router.push({ name: "Home" });
+      },
 
       reset() {
         this.$refs.form.reset()

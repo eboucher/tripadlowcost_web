@@ -1,36 +1,53 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
+// var base_url = `https://dev-tripadlowcost.herokuapp.com/`;
+
 export default new Vuex.Store({
 
-  state: {},
+  state: {
+    token: null
+  },
   
-  mutations: {},
+  mutations: {
+    setToken(state, token) {
+      state.token = token;
+    }
+  },
 
   actions: {
-    retrieveTokens(context, credentials) {
+    async login({commit, state}, userInfos) {
 
-      return new Promise((resolve, reject) => {
-        axios.post('/login', {
-          identifier: credentials.username,
-          password: credentials.password,
-        })
-          .then(response => {
-            const token = response.data.access_token
+      axios.post(`https://dev-tripadlowcost.herokuapp.com/auth/local`, {
+        identifier: userInfos.username,
+        password: userInfos.password
+      }).then(response => {
+        commit('setToken', response);
+      })
+    },
+    
+    async register({commit, state}, userInfos) {
 
-            localStorage.setItem('access_token', token)
-            context.commit('retrieveToken', token)
-            resolve(response)
-            // console.log(response);
-            // context.commit('addTodo', response.data)
-          })
-          .catch(error => {
-            console.log(error)
-            reject(error)
-          })
-        })
+      axios.post(`https://dev-tripadlowcost.herokuapp.com/auth/local/register`, {
+        identifier: userInfos.username,
+        firstname: userInfos.firstname,
+        lastname: userInfos.lastname,
+        email: userInfos.email,
+        password: userInfos.password,
+        adress: userInfos.adress,
+        phone: userInfos.phone
+      }).then(response => {
+        commit('setToken', response);
+      })
+    }
+  },
+  
+  getters: {
+    isAuthenticated: (state) => {
+      return state.token != null;
     }
   }
 });
