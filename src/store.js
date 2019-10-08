@@ -32,7 +32,7 @@ export default new Vuex.Store({
     async register({commit, state}, userInfos) {
 
       axios.post(`https://dev-tripadlowcost.herokuapp.com/auth/local/register`, {
-        identifier: userInfos.username,
+        username: userInfos.username,
         firstname: userInfos.firstname,
         lastname: userInfos.lastname,
         email: userInfos.email,
