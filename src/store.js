@@ -42,7 +42,13 @@ export default new Vuex.Store({
       }).then(response => {
         commit('setToken', response);
       })
+    },
+    
+    async getTrips({}, query) {
+      console.log("Query ---> ", query);
+      return await axios.get(`https://dev-tripadlowcost.herokuapp.com/voyages?${query.query}`);
     }
+    
   },
   
   getters: {
@@ -52,6 +58,6 @@ export default new Vuex.Store({
 
     loggedUser: (state) => {
       return state.token.data.user;
-    }
+    }   
   }
 });
