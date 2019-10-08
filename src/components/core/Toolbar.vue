@@ -23,11 +23,37 @@
       />
       <v-spacer/>
 
-      <v-toolbar-items>
+      <v-toolbar-items v-if="!isAuthenticated">
         <v-btn text to='/'>Home</v-btn>
         <v-btn text to='/trips'>Trips</v-btn>
         <v-btn text to='/login'>Login</v-btn>
         <v-btn text to='/register'>Register</v-btn>
+      </v-toolbar-items>
+
+      <v-toolbar-items v-else>
+        <v-btn text to='/'>Home</v-btn>
+        <v-btn text to='/post'>Post</v-btn>
+        <v-btn text to='/trips'>Trips</v-btn>
+
+        <v-menu offset-y>
+          <template v-slot:activator="{ on }">
+            <v-btn text v-on="on"> {{ loggedUser.username }} </v-btn>
+          </template>
+          <v-list>
+            <v-list-item to='/'>
+              <v-list-item-title> My profile </v-list-item-title>
+            </v-list-item>
+            <v-list-item to='/post'>
+              <v-list-item-title> My trips </v-list-item-title>
+            </v-list-item>
+            <v-list-item to='/trips'>
+              <v-list-item-title> Settings </v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="">
+              <v-list-item-title> Log out </v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-toolbar-items>
     </v-toolbar>
   </div>
@@ -35,7 +61,39 @@
 
 <script>
   export default {
+    computed: {
+      isAuthenticated() {
+        return this.$store.getters.isAuthenticated;
+      },
+
+      loggedUser() {
+        if(this.$store.getters.isAuthenticated) {
+          return this.$store.getters.loggedUser;
+        } else {
+          return "User not found";
+        }
+      }
+    },
+    data() {
+      return {
+        items: [
+          { title: 'My profile', to: '/' },
+          { title: 'My trips', to: '/' },
+          { title: 'Settings', to: '/' },
+          { title: 'Log out', to: '/' },
+        ],
+
+        search : ''
+      }
+    },
+
     methods: {
+      async logout() {
+        await this.$auth.logout();
+      },
+      trigger() {
+        this.$router.push(`/trips/search?query=${this.search}`)
+      }
     }
   }
 </script>
