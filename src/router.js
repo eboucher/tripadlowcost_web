@@ -54,10 +54,34 @@ export default new Router({
         import("./views/auth/Login.vue")
     },
     {
-      path: "/post",
-      name: "post",
+      path: "/trips",
+      name: "trips",
       component: () =>
-        import("./views/trips/Post.vue")
+        import("./views/trips/Trips.vue"),
+      children: [
+        {
+          path: "/trips/post",
+          name: "trip-post",
+          component: () => import("./views/trips/Post.vue"),
+        },
+        {
+          path: "/trips/:id",
+          name: "trips-id",
+          component: () => import("./views/trips/_id/index.vue"),
+          children: [
+            {
+              path: "/trips/:id/edit",
+              name: "trips-id-edit",
+              component: () => import("./views/trips/_id/Edit.vue"),
+            },
+            {
+              path: "/trips/:id/:eid",
+              name: "trips-id-eid",
+              component: () => import("./views/trips/_id/_eid.vue"),
+            }
+          ]
+        },
+      ]
     }
   ],
 });

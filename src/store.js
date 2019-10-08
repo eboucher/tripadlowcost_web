@@ -45,7 +45,6 @@ export default new Vuex.Store({
     },
     
     async getTrips({}, query) {
-      console.log("Query ---> ", query);
       return await axios.get(`https://dev-tripadlowcost.herokuapp.com/voyages?${query.query}`);
     }
     

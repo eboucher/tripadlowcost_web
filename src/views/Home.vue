@@ -1,6 +1,19 @@
 <template>
   <section class="section">
-    {{ trips }}
+      <Carousel :trips="trips"/>
+      <div v-if="loggedUser && this.trips.length>0">
+        <h1 class="title">Suggestions</h1>
+        <Carousel :trips="trips"/>
+      </div>
+
+    <TripPreview
+      v-for="trip in trips"
+      :key="trip.id"
+      :title="trip.title"
+      :excerpt="trip.description"
+      :thumbnailImage="trip.thumbnail"
+      :id="trip.id" />
+
   </section>
 </template>
 
@@ -29,10 +42,7 @@
     },
 
     mounted: async function() {
-      console.log("Bonjour on est là!");
       this.trips = await this.$store.dispatch("getTrips", {query:'_start=0&_limit=12&_sort=created_at:DESC'});
-      console.log(trips);
-      return { trips };
     },
 
     components: {

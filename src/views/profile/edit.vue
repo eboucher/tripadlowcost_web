@@ -148,7 +148,7 @@
 </template>
 
 <script>
-  import Notification from '~/components/Notification'
+  import Notification from '@/components/base/Notification'
   import { mapGetters } from 'vuex'
 
   export default {

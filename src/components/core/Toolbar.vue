@@ -32,7 +32,7 @@
 
       <v-toolbar-items v-else>
         <v-btn text to='/'>Home</v-btn>
-        <v-btn text to='/post'>Post</v-btn>
+        <v-btn text to='/trips/post'>Post</v-btn>
         <v-btn text to='/trips'>Trips</v-btn>
 
         <v-menu offset-y>

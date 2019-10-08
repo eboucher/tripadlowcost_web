@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import Trip from '@/components/base/Trip'
+  import Trip from '@/components/core/Trip'
 
   export default {
     components: {

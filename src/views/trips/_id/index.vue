@@ -12,7 +12,7 @@
           <p>Author : <nuxt-link :to="'/profile/' + trip.user.id">{{ trip.user.username }}
             <v-avatar>
               <img v-if="trip.user.picture" class="profilepic" :src="trip.user.picture.url" >
-              <img v-else class="profilepic" src="../../../static/defaultpic.png" alt= "profile">
+              <img v-else class="profilepic" src="../../../assets/defaultpic.png" alt= "profile">
             </v-avatar>
           </nuxt-link>
           </p>
