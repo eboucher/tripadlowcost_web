@@ -20,15 +20,17 @@
           required
         ></v-text-field>
 
-      <v-file-input
-        :rules="[rules.required, rules.imageRules]"
-        accept="image/png, image/jpeg, image/bmp"
-        placeholder="Select an image"
-        prepend-icon="mdi-camera"
-        label="Image"
-        v-model="image"
-        v-on:change="handleFileUpload()"
-      ></v-file-input>
+        <v-file-input
+          type="file"
+          :rules="[rules.required, rules.imageRules]"
+          accept="image/png, image/jpeg, image/bmp"
+          placeholder="Select an image"
+          prepend-icon="mdi-camera"
+          label="Image"
+          v-model="image"
+          ref="picture"
+          v-on:change="handleFileUpload()"
+        ></v-file-input>
 
         <v-row justify="space-around">
           <v-date-picker
