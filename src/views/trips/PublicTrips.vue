@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1>Test</h1>
+    <h1>Public trips</h1>
     <v-row justify="center" v-if="loading">
       <v-progress-circular :size="75" indeterminate color="primary"></v-progress-circular>
     </v-row>

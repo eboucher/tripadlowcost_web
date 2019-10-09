@@ -43,7 +43,7 @@
             <v-list-item to='/'>
               <v-list-item-title> My profile </v-list-item-title>
             </v-list-item>
-            <v-list-item to='/post'>
+            <v-list-item to='/trips/user-trips'>
               <v-list-item-title> My trips </v-list-item-title>
             </v-list-item>
             <v-list-item to='/trips'>

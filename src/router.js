@@ -59,9 +59,14 @@ export default new Router({
       component: () => import("./views/trips/Trips.vue"),
       children: [
         {
-          path: "public-trips", // ICI IL Y A UN PROBLEME ! (ça marche si je mets /trips/public-trips comme en dessous, mais c'est pas l'idée!)
+          path: "public-trips",
           name: "PublicTrips",
           component: () => import("./views/trips/PublicTrips.vue"),
+        },
+        {
+          path: "user-trips",
+          name: "UserTrips",
+          component: () => import("./views/trips/UserTrips.vue"),
         },
       ]
     },
