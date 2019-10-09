@@ -60,32 +60,50 @@ export default new Router({
         import("./views/trips/Trips.vue"),
       children: [
         {
-          path: "/public-trips", // ICI IL Y A UN PROBLEME ! (ça marche si je mets /trips/public-trips comme en dessous, mais c'est pas l'idée!)
+          path: "public-trips",
           name: "PublicTrips",
           component: () => import("./views/trips/PublicTrips.vue"),
         },
         {
-          path: "/trips/post",
+          path: "post",
           name: "trip-post",
           component: () => import("./views/trips/Post.vue"),
         },
         {
-          path: "/trips/:id",
+          path: ":id",
           name: "trips-id",
           component: () => import("./views/trips/_id/Trip.vue"),
           children: [
             {
-              path: "/trips/:id/edit",
-              name: "trips-id-edit",
+              path: "edit",
+              name: "edit",
               component: () => import("./views/trips/_id/Edit.vue"),
             },
             {
-              path: "/trips/:id/:eid",
-              name: "trips-id-eid",
+              path: ":eid",
+              name: "eid",
               component: () => import("./views/trips/_id/_eid.vue"),
             }
           ]
         },
+      ]
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: () =>
+        import("./views/profile/Profile.vue"),
+      children: [
+        {
+          path: "user-profile",
+          name: "UserProfile",
+          component: () => import("./views/profile/UserProfile.vue"),
+        },
+        {
+          path: 'edit-profile',
+          name: "EditProfile",
+          component: () => import("./views/profile/EditProfile.vue"),
+        }
       ]
     }
   ],

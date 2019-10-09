@@ -40,7 +40,7 @@
             <v-btn text v-on="on"> {{ loggedUser.username }} </v-btn>
           </template>
           <v-list>
-            <v-list-item to='/'>
+            <v-list-item to='/profile/user-profile'>
               <v-list-item-title> My profile </v-list-item-title>
             </v-list-item>
             <v-list-item to='/post'>
@@ -49,7 +49,7 @@
             <v-list-item to='/trips'>
               <v-list-item-title> Settings </v-list-item-title>
             </v-list-item>
-            <v-list-item @click="">
+            <v-list-item>
               <v-list-item-title> Log out </v-list-item-title>
             </v-list-item>
           </v-list>
