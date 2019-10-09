@@ -75,6 +75,7 @@
   import Notification from '@/components/base/Notification'
   
   export default {
+    name: 'post',
 
     data: () => ({
       valid: true,
@@ -84,6 +85,7 @@
       start: new Date().toISOString().substr(0, 10),
       end: new Date().toISOString().substr(0, 10),
       description: '',
+      error:'',
 
       rules: {
         required: v => !!v || 'Required',
@@ -114,7 +116,7 @@
       },
 
       handleFileUpload() {
-        this.image = this.$refs.image.files[0];
+        this.image = this.$refs.picture.files[0];
       },
 
       submitFile(tripId) {

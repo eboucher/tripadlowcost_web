@@ -49,7 +49,7 @@ export default new Vuex.Store({
     },
     
     async createTrip({commit, state}, tripInfos) {
-      const newTrip = await this.$axios.post('https://dev-tripadlowcost.herokuapp.com/voyages', {
+      const newTrip = await axios.post('https://dev-tripadlowcost.herokuapp.com/voyages', {
         title: tripInfos.title,
         start: tripInfos.start,
         end: tripInfos.end,
