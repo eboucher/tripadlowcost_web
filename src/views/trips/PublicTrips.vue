@@ -31,28 +31,17 @@ import Trip from '@/components/core/Trip'
 
 export default {
   name: "PublicTrips",
-  
+
   components: {
     Trip
   },
 
-  data() {
+  data: () => {
     return {
       page: 1,
       loading: false,
       trips: null
-    }
-  },
-
-  watch: {
-    page: async function (newValue) {
-      this.loading = true
-
-      this.trips = await this.$store.dispatch("getTrips", {query:`/voyages?_start=${(newValue - 1) * 12}&_limit=12&_sort=created_at:DESC`});
-      this.trips = this.trips.data;
-
-      this.loading = false
-    }
+    };
   },
 
   async asyncData({ $axios }) {
@@ -74,7 +63,6 @@ export default {
     }
   },
 
-  /*
   mounted: async function() {
     this.trips = await this.$store.dispatch("getTrips", {query:`/voyages?_start=${(newValue - 1) * 12}&_limit=12&_sort=created_at:DESC`});
     this.trips = this.trips.data;
@@ -86,7 +74,6 @@ export default {
       this.suggested = this.suggested.data;
     }
   },
-  */
 }
 </script>
 
