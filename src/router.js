@@ -60,6 +60,11 @@ export default new Router({
         import("./views/trips/Trips.vue"),
       children: [
         {
+          path: "/public-trips",
+          name: "PublicTrips",
+          component: () => import("./views/trips/PublicTrips.vue"),
+        },
+        {
           path: "/trips/post",
           name: "trip-post",
           component: () => import("./views/trips/Post.vue"),
