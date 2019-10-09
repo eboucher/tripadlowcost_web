@@ -32,7 +32,7 @@
 
       <v-toolbar-items v-else>
         <v-btn text to='/'>Home</v-btn>
-        <v-btn text to='/trips/post'>Post</v-btn>
+        <v-btn text to='/post'>Post</v-btn>
         <v-btn text to='/trips/public-trips'>Trips</v-btn>
 
         <v-menu offset-y>
@@ -40,7 +40,7 @@
             <v-btn text v-on="on"> {{ loggedUser.username }} </v-btn>
           </template>
           <v-list>
-            <v-list-item to='/profile/user-profile'>
+            <v-list-item to='/'>
               <v-list-item-title> My profile </v-list-item-title>
             </v-list-item>
             <v-list-item to='/post'>

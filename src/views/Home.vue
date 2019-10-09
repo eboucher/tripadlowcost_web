@@ -1,71 +1,98 @@
 <template>
-  <v-carousel>
-    <v-carousel-item
-      v-for="(item,i) in items"
-      :key="i"
-      :src="item.src"
-      reverse-transition="fade-transition"
-      transition="fade-transition"
-    ></v-carousel-item>
-  </v-carousel>
+    <section>
+        <v-row justify="center">
+            <!-- <Carousel :trips="trips" /> -->
+            <h1>Voyages</h1>
+            <v-carousel height="500">
+                <v-carousel-item v-for="(item,i) in trips" :key="i" :src="item.picture.url">
+                    <v-row class="fill-height" align="center" justify="center">
+                      <div class="display-3" style="color: white;">{{ item.title }}</div>
+                    </v-row>
+                </v-carousel-item>
+            </v-carousel>
+        </v-row>
+        <v-row justify="center" v-if="loggedUser" style="margin-top:15px;">
+            <h1>Suggestions</h1>
+            <v-carousel height="500">
+                <v-carousel-item v-for="(item,i) in items" :key="i" :src="item.src"></v-carousel-item>
+            </v-carousel>
+        </v-row>
+    </section>
+
+    <!-- <TripPreview
+      v-for="trip in trips"
+      :key="trip.id"
+      :title="trip.title"
+      :excerpt="trip.description"
+      :thumbnailImage="trip.thumbnail"
+      :id="trip.id"
+    />-->
 </template>
 
 <script>
-  import Carousel from '@/components/base/Carousel'
-  export default {
+import Carousel from "@/components/base/Carousel";
+export default {
     name: "Home",
     data: () => {
-      return {
-        items: [
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-          },
-          {
-            src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-          },
-        ],
-        trips: null,
-        suggested: null,
-      };
+        return {
+            trips: null,
+            suggested: null,
+            items: [
+                {
+                    src:
+                        "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"
+                },
+                {
+                    src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg"
+                },
+                {
+                    src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg"
+                },
+                {
+                    src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
+                }
+            ]
+        };
     },
 
     computed: {
-      isAuthenticated() {
-        return this.$store.getters.isAuthenticated;
-      },
+        isAuthenticated() {
+            return this.$store.getters.isAuthenticated;
+        },
 
-      loggedUser() {
-        if(this.$store.getters.isAuthenticated) {
-          return this.$store.getters.loggedUser;
-        } else {
-          return "User not found";
+        loggedUser() {
+            if (this.$store.getters.isAuthenticated) {
+                return this.$store.getters.loggedUser;
+            } else {
+                return false;
+            }
         }
-      },
     },
 
     mounted: async function() {
-      this.trips = await this.$store.dispatch("getTrips", {query:'_start=0&_limit=12&_sort=created_at:DESC'});
-      if (this.trips != null && this.trips.data != null)
-        this.trips = this.trips.data;
+        const { data } = await this.$store.dispatch("getTrips", {
+            query: "_start=0&_limit=12&_sort=created_at:DESC"
+        });
+        this.trips = data.filter(trip => trip.picture != undefined);
+        console.log(this.trips.filter(trip => trip.picture != undefined));
 
-      if(this.$store.getters.loggedUser && this.$store.getters.loggedUser.interests) {
-        const user = this.$store.getters.loggedUser;
-        const query = user.interests.map(interest => `interests.tag=${interest.tag}`).join('&')
-        
-        this.suggested = await this.$store.dispatch("getTrips", {query:`/voyages?${query}&_limit=5`})
-      if (this.suggested != null && this.suggested.data != null)
-        this.suggested = this.suggested.data;
-      }
+        if (
+            this.$store.getters.loggedUser &&
+            this.$store.getters.loggedUser.interests
+        ) {
+            const user = this.$store.getters.loggedUser;
+            const query = user.interests
+                .map(interest => `interests.tag=${interest.tag}`)
+                .join("&");
+            const suggested = await this.$store.dispatch("getTrips", {
+                query: `/voyages?${query}&_limit=5`
+            });
+            this.suggested = suggested.data;
+        }
     },
 
     components: {
-      Carousel
-    },
-  };
+        Carousel
+    }
+};
 </script>

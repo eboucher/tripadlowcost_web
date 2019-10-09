@@ -81,7 +81,7 @@
           password: this.password
         });
         
-        this.$router.push({ name: "Home" });
+        this.$router.push({ name: "home" });
       },
 
       reset() {
