@@ -60,7 +60,7 @@ export default new Router({
         import("./views/trips/Trips.vue"),
       children: [
         {
-          path: "/public-trips",
+          path: "/public-trips", // ICI IL Y A UN PROBLEME ! (ça marche si je mets /trips/public-trips comme en dessous, mais c'est pas l'idée!)
           name: "PublicTrips",
           component: () => import("./views/trips/PublicTrips.vue"),
         },
@@ -72,7 +72,7 @@ export default new Router({
         {
           path: "/trips/:id",
           name: "trips-id",
-          component: () => import("./views/trips/_id/index.vue"),
+          component: () => import("./views/trips/_id/Trip.vue"),
           children: [
             {
               path: "/trips/:id/edit",

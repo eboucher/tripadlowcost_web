@@ -25,7 +25,7 @@
 
       <v-toolbar-items v-if="!isAuthenticated">
         <v-btn text to='/'>Home</v-btn>
-        <v-btn text to='/trips'>Trips</v-btn>
+        <v-btn text to='/trips/public-trips'>Trips</v-btn>
         <v-btn text to='/login'>Login</v-btn>
         <v-btn text to='/register'>Register</v-btn>
       </v-toolbar-items>

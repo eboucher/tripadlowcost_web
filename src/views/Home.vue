@@ -1,6 +1,6 @@
 <template>
   <section class="section">
-    {{loggedUser}}
+
     <Carousel
       :trips="trips"/>
     <div v-if="loggedUser">
@@ -28,7 +28,7 @@
     data: () => {
       return {
         trips: null,
-        suggested: getSuggestions(),
+        suggested: null,
         items: [
           {
             src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
@@ -56,16 +56,6 @@
           return this.$store.getters.loggedUser;
         } else {
           return "User not found";
-        }
-      },
-
-      getSuggestions() {
-        if(this.$store.getters.isAuthenticated 
-            && this.$store.getters.loggedUser.interests) {
-          this.suggested = this.$store.getters.loggedUser.interests;
-          return this.$store.getters.loggedUser.interests;
-        } else {
-          return 0;
         }
       },
     },
