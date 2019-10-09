@@ -46,6 +46,39 @@ export default new Vuex.Store({
     
     async getTrips({}, query) {
       return await axios.get(`https://dev-tripadlowcost.herokuapp.com/voyages?${query.query}`);
+    },
+    
+    async createTrip({commit, state}, tripInfos) {
+      const newTrip = await this.$axios.post('https://dev-tripadlowcost.herokuapp.com/voyages', {
+        title: tripInfos.title,
+        start: tripInfos.start,
+        end: tripInfos.end,
+        description: tripInfos.description,
+        close: false
+      },
+        {
+          headers: {
+            Authorization: this.getJWT
+          }
+        })
+      await this.submitFile(trip.data.id)
+      this.$router.push(`https://dev-tripadlowcost.herokuapp.com/trips/${trip.data.id}/edit`)
+      return newTrip;
+    },
+
+    async uploadImage({commit, state}, imageInfo) {
+      await axios.post(
+        `https://dev-tripadlowcost.herokuapp.com/upload`,
+        imageInfo.formData, 
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: this.getJWT
+          }
+        }
+      ).then(response => {
+        commit('setToken', response);
+      })
     }
     
   },
@@ -57,6 +90,10 @@ export default new Vuex.Store({
 
     loggedUser: (state) => {
       return state.token.data.user;
-    }   
+    },
+
+    getJWT: (state) => {
+      return state.token.jwt;
+    }
   }
 });
