@@ -81,5 +81,23 @@ export default new Router({
       component: () =>
         import("./views/trips/Post.vue")
     },
+    {
+      path: "/profile",
+      name: "profile",
+      component: () =>
+        import("./views/profile/Profile.vue"),
+      children: [
+        {
+          path: "user-profile",
+          name: "UserProfile",
+          component: () => import("./views/profile/_id.vue"),
+        },
+        {
+          path: 'edit-profile',
+          name: "EditProfile",
+          component: () => import("./views/profile/EditProfile.vue"),
+        }
+      ]
+    }
   ],
 });

@@ -40,9 +40,11 @@
             <v-btn text v-on="on"> {{ loggedUser.username }} </v-btn>
           </template>
           <v-list>
-            <v-list-item to='/'>
-              <v-list-item-title> My profile </v-list-item-title>
-            </v-list-item>
+            <router-link :to="'/profile/' + loggedUser.id">
+              <v-list-item>
+                <v-list-item-title> My profile </v-list-item-title>
+              </v-list-item>
+            </router-link>
             <v-list-item to='/trips/user-trips'>
               <v-list-item-title> My trips </v-list-item-title>
             </v-list-item>

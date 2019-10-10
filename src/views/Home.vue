@@ -77,10 +77,6 @@ export default {
       });
       this.suggested = suggested.data;
     }
-  },
-
-  components: {
-    Carousel
   }
 };
 </script>
