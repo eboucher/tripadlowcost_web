@@ -6,17 +6,19 @@
     </v-row>
     <v-row v-else>
       <v-col v-for="(item, index) in trips" :key="index" cols="3">
-        <v-card max-width="344" class="mx-auto">
-          <v-card-title>{{ item.title }}</v-card-title>
-          <v-img v-if="item.picture" class="white--text" height="200px" :src="item.picture.url"></v-img>
-          <v-img
-            v-else
-            class="white--text"
-            height="200px"
-            src="https://webhostingmedia.net/wp-content/uploads/2018/01/http-error-404-not-found.png"
-          ></v-img>
-          <v-card-text class="trunc">{{item.description}}</v-card-text>
-        </v-card>
+        <router-link :to="{ path: '/trips/' + item.id }">
+          <v-card max-width="344" class="mx-auto">
+            <v-card-title>{{ item.title }}</v-card-title>
+            <v-img v-if="item.picture" class="white--text" height="200px" :src="item.picture.url"></v-img>
+            <v-img
+              v-else
+              class="white--text"
+              height="200px"
+              src="https://webhostingmedia.net/wp-content/uploads/2018/01/http-error-404-not-found.png"
+            ></v-img>
+            <v-card-text class="trunc">{{item.description}}</v-card-text>
+          </v-card>
+        </router-link>
       </v-col>
     </v-row>
     <v-row>

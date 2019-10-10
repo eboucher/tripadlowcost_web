@@ -68,6 +68,11 @@ export default new Router({
           name: "UserTrips",
           component: () => import("./views/trips/UserTrips.vue"),
         },
+        {
+          path: ":id",
+          name: ":id",
+          component: () => import("./views/trips/trip/_id.vue"),
+        },
       ]
     },
     {

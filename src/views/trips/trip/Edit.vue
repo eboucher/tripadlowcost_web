@@ -3,8 +3,5 @@
 </template>
 
 <script>
-  import Notification from '@/components/base/Notification'
 
-  export default {
-    }
 </script>
