@@ -36,8 +36,8 @@
         <v-btn text to='/trips/public-trips'>Trips</v-btn>
 
         <v-menu offset-y>
-          <template v-slot:activator="{ on }">
-            <v-btn text v-on="on"> {{ loggedUser.username }} </v-btn>
+          <template v-if="isAuthenticated" v-slot:activator="{ on }">
+            <v-btn text v-on="on"> {{ username }} </v-btn>
           </template>
           <v-list>
             <router-link to="/profile/user-profile">
@@ -63,29 +63,16 @@
 
 <script>
   export default {
+    data() {
+      return {
+        username: null,
+        search: ''
+      }
+    },
+
     computed: {
       isAuthenticated() {
         return this.$store.getters.isAuthenticated;
-      },
-
-      loggedUser() {
-        if(this.$store.getters.isAuthenticated) {
-          return this.$store.getters.loggedUser;
-        } else {
-          return "User not found";
-        }
-      }
-    },
-    data() {
-      return {
-        items: [
-          { title: 'My profile', to: '/' },
-          { title: 'My trips', to: '/' },
-          { title: 'Settings', to: '/' },
-          { title: 'Log out', to: '/' },
-        ],
-
-        search : ''
       }
     },
 
@@ -96,6 +83,10 @@
       trigger() {
         this.$router.push(`/trips/search?query=${this.search}`)
       }
+    },
+    
+    mounted: async function() {
+      const username = this.$store.getters.loggedUser.username;
     }
   }
 </script>

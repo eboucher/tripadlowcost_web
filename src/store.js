@@ -110,6 +110,10 @@ export default new Vuex.Store({
       return state.user;
     },
 
+    getUsername: (state) => {
+      return state.token.data.username;
+    },
+
     getJWT: (state) => {
       return state.token.data.jwt;
     }
