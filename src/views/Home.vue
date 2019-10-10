@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import Carousel from "@/components/base/Carousel";
 export default {
   name: "Home",
   data: () => {
