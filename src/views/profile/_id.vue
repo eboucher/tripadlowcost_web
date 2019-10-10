@@ -179,8 +179,7 @@
     },
 
     mounted: async function() {
-      const { data } = await this.$store.dispatch("getMyProfile");
-      this.user = data;
+      this.user = this.$store.getters.fullUser;
     }
   };
 </script>

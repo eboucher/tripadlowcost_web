@@ -16,6 +16,7 @@ export default new Vuex.Store({
   mutations: {
     setToken(state, token) {
       state.token = token;
+      this.getJWT = token.data.jwt;
     },
     setUser(state, user) {
       state.user = user;
@@ -64,12 +65,6 @@ export default new Vuex.Store({
       return await axios.get(`https://dev-tripadlowcost.herokuapp.com/voyages/`);
     },
     
-    /*
-    async getMyProfile({}) {
-      return await axios.get(`https://dev-tripadlowcost.herokuapp.com/voyages?${query.query}`);
-    },
-    */
-    
     async createTrip({commit, state}, tripInfos) {
       const newTrip = await axios.post('https://dev-tripadlowcost.herokuapp.com/voyages', {
         title: tripInfos.title,
@@ -92,13 +87,12 @@ export default new Vuex.Store({
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: this.getJWT
+            Authorization: "bearer " + this.getJWT
           }
         }).then(response => {
           commit('setToken', response);
       })
     }
-    
   },
   
   getters: {
