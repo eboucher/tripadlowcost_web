@@ -107,6 +107,10 @@ export default new Vuex.Store({
     },
 
     loggedUser: (state) => {
+      return state.token.data.user;
+    },
+
+    fullUser: (state) => {
       return state.user;
     },
 

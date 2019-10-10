@@ -37,7 +37,7 @@
 
         <v-menu offset-y>
           <template v-if="isAuthenticated" v-slot:activator="{ on }">
-            <v-btn text v-on="on"> {{ username }} </v-btn>
+            <v-btn text v-on="on"> {{ loggedUser.username }} </v-btn>
           </template>
           <v-list>
             <router-link to="/profile/user-profile">
@@ -73,6 +73,13 @@
     computed: {
       isAuthenticated() {
         return this.$store.getters.isAuthenticated;
+      },
+      loggedUser() {
+        if(this.$store.getters.isAuthenticated) {
+          return this.$store.getters.loggedUser;
+        } else {
+          return false;
+        }
       }
     },
 
@@ -86,7 +93,8 @@
     },
     
     mounted: async function() {
-      const username = this.$store.getters.loggedUser.username;
+      const user = this.$store.getters.loggedUser;
+      this.username = user.username
     }
   }
 </script>
