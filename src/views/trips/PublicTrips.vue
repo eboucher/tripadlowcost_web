@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import Trip from "@/components/core/Trip";
 import axios from "axios";
 
 export default {
