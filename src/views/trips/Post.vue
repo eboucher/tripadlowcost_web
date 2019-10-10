@@ -3,11 +3,6 @@
     <v-layout column align-center justify-space-around row fill-height>
       <v-toolbar-title>Share your trip so that it can be discovered by TripadLowCost surfers</v-toolbar-title>
 
-      <Notification 
-        :message="error" 
-        v-if="error"
-      />
-
       <v-form
         ref="form"
         v-model="valid"
@@ -74,7 +69,6 @@
 </template>
 
 <script>
-  import Notification from '@/components/base/Notification'
   
   export default {
     name: 'post',
@@ -101,39 +95,30 @@
         this.$refs.form.reset()
       },
 
-      createTrip() {
-        try {
-          const newTrip = this.$store.dispatch("createTrip", {
+      async createTrip() {
+        const newTrip = await this.$store.dispatch("createTrip", {
             title: this.title,
             start: this.start,
             end: this.end,
             description: this.description,
-            close: false
+            close: false,
+            jwt: this.$store.getters.getJWT
           })
-          this.submitFile(newTrip.data.id)
-          this.$router.push(`/trips/${newTrip.data.id}/edit`)
-        } catch (e) {
-          this.error = e.response.data.message
-        }
+        await this.submitFile(newTrip.data.id);
+        this.$router.push(`/trips/${newTrip.data.id}/edit`)
       },
 
       handleFileUpload() {
         this.image = this.$refs.picture.files[0];
       },
 
-      submitFile(tripId) {
+      async submitFile(tripId) {
         let formData = new FormData();
         formData.append('files', this.image);
         formData.append('refId', tripId);
-        formData.append('ref', 'trip');    // WARNING ---> I changed 'voyage' by 'trip'
-        formData.append('field', 'image'); // WARNING ---> I changed 'picture' by 'image'
-        try {
-          this.$store.dispatch('uploadImage', {
-            formData
-          });
-        } catch (e) {
-          this.error = e.response.data.message
-        }
+        formData.append('ref', 'voyage');
+        formData.append('field', 'picture');
+        await this.$store.dispatch("uploadImage", formData);
       },
 
     }

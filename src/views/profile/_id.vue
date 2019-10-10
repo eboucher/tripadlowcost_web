@@ -28,7 +28,7 @@
         </v-card-text>
         <strong>Interests:</strong><br>
         <v-chip
-          v-for="key in loggedUser.interests"
+          v-for="key in user.interests"
           v-if="key"
           :key="key.id"
           class="ma-2"
@@ -161,7 +161,6 @@
     data: () => {
       return {
         user: null,
-        userTrips: null,
       };
     },
 
@@ -180,26 +179,8 @@
     },
 
     mounted: async function() {
-      const { data } = await this.$store.dispatch("getTrips", {
-        query: "_start=0&_limit=12&_sort=created_at:DESC"
-      });
-      this.trips = data.filter(trip => trip.picture != undefined);
-
-      this.user = this.$store.getters.loggedUser;
-
-      if (
-        this.$store.getters.loggedUser &&
-        this.$store.getters.loggedUser.interests
-      ) {
-        const user = this.$store.getters.loggedUser;
-        const query = user.interests
-          .map(interest => `interests.tag=${interest.tag}`)
-          .join("&");
-        const suggested = await this.$store.dispatch("getTrips", {
-          query: `/voyages?${query}&_limit=5`
-        });
-        this.suggested = suggested.data;
-      }
+      const { data } = await this.$store.dispatch("getMyProfile");
+      this.user = data;
     }
   };
 </script>
