@@ -1,34 +1,61 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-xs-center">
-    <h1>{{ this.trip.title }}</h1>
-      <img v-if="this.trip.picture" class="center" :src="this.trip.picture.url" :alt="this.trip.title">
-      </div>
-      <div class="container">
-    <v-divider></v-divider>
-        <div class="text-xs-center">
-          <p>{{formatDate(this.trip.start)}} || {{formatDate(this.trip.end)}}</p>
-          <p>Author : <nuxt-link :to="'/profile/' + this.trip.user.id">{{ this.trip.user.username }}
-            <v-avatar>
-              <img v-if="this.trip.user.picture" class="profilepic" :src="this.trip.user.picture.url" >
-              <img v-else class="profilepic" src="https://webhostingmedia.net/wp-content/uploads/2018/01/http-error-404-not-found.png" alt= "profile">
-            </v-avatar>
-          </nuxt-link>
-          </p>
-          {{ this.likes }}
-          <v-btn v-if="loggedUser" v-on:click.native="like" color="primary">Like</v-btn>
-          <v-btn v-if="loggedUser" v-on:click.native="unlike" color="error">Unlike</v-btn>
+  <v-container align-content-center>
+    <v-layout row wrap>
+        <v-flex xs6 offset-xs3>
+          <p xs6 offset-xs3 class="align-center">{{ this.trip.title }}</p>
+          <v-img
+            :src="this.trip.picture.url"
+            aspect-ratio="1"
+            class="grey lighten-2"
+            max-width="1000"
+            max-height="500"
+          >
+          </v-img>
+          <div class="text-xs-center" >
+            <p>{{formatDate(this.trip.start)}} || {{formatDate(this.trip.end)}}</p>
+          </div>
           <p>
-          <v-btn v-if="loggedUser.id === this.trip.user.id" v-on:click.native="deleteTrip" color="error">Delete</v-btn>
-          <v-btn v-if="loggedUser.id === this.trip.user.id" :to="'/trips/' + this.trip.id + '/edit'">Edit</v-btn>
+          <p> {{ this.trip.description }} </p>
+          <p>Author : <router-link :to="'/profile/' + this.trip.user.id">{{ this.trip.user.username }}
+          </router-link>
           </p>
-        </div>
-        <v-divider></v-divider>
-    <p> {{ this.trip.description }} </p>
-    </div>
-    </v-flex>
-  </v-layout>
+          <div>
+            {{ this.likes }}
+            <v-btn
+            v-if="loggedUser"
+            v-on:click.native="like"
+            class="ma-2" 
+            text 
+            icon 
+            color="blue lighten-2">
+              <v-icon>mdi-thumb-up</v-icon>
+            </v-btn>
+
+            <v-btn
+            v-if="loggedUser"
+            v-on:click.native="unlike"
+            class="ma-2" 
+            text 
+            icon 
+            color="red lighten-2">
+              <v-icon>mdi-thumb-down</v-icon>
+            </v-btn>
+          </div>
+
+          <v-btn v-if="loggedUser.id === this.trip.user.id" v-on:click.native="deleteTrip" color="error">Delete</v-btn>
+          <v-btn
+             v-if="loggedUser.id === this.trip.user.id"
+            class="ma-2" 
+            tile 
+            outlined 
+            color="success" 
+            :to="'/trips/' + this.trip.id + '/edit'"
+            >
+            <v-icon left>mdi-pencil</v-icon> Edit
+          </v-btn>
+        </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
