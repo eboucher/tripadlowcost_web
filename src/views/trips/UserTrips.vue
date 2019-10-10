@@ -6,7 +6,7 @@
     </v-row>
     <v-row v-else>
       <v-col v-for="(item, index) in trips" :key="index" cols="3">
-        <router-link :to="{ path: '/trips/' + item.id }">
+        <router-link :to="{ path: '/trips/' + item.id, query:{trip:trips[item.id]} }">
           <v-card max-width="344" class="mx-auto">
             <v-card-title>{{ item.title }}</v-card-title>
             <v-img v-if="item.picture" class="white--text" height="200px" :src="item.picture.url"></v-img>
@@ -28,70 +28,77 @@
 </template>
 
 <script>
-import axios from "axios";
+  import axios from "axios";
 
-export default {
-  name: "PublicTrips",
-
-  components: {},
-
-  data: () => {
-    return {
-      user: null,
-      loading: false,
-      trips: null,
-      limit: 1,
-      page: 1
-    };
-  },
-
-  computed: {
-    loggedUser() {
-      if (this.$store.getters.isAuthenticated) {
-        return this.$store.getters.loggedUser;
-      } else {
-        return false;
-      }
-    }
-  },
-
-  methods: {
-
-    goTo: function(page) {
-      this.fetchTrips(page);
-    },
-
-    fetchTrips: async function(page) {
-      this.user = this.$store.getters.loggedUser;
-      this.loading = true;
-      const { data } = await this.$store.dispatch("getTrips", {
-        query: `user=${this.user.id}`
+  function sortTrips(array) {
+      var result = {};
+      array.forEach(function(trip) {
+          result[trip.id] = trip;
       });
-      this.trips = data;
-      this.loading = false;
-      console.log(this.trips);
-    },
-    
-    countTrips: async function() {
-      const count = await axios.get(
-        "https://dev-tripadlowcost.herokuapp.com/voyages/count"
-      );
-      this.limit = Math.trunc(count.data / 12) + 1;
-    }
-  },
-
-  mounted: async function() {
-    this.countTrips();
-    this.fetchTrips();
+      return result;
   }
-};
+  export default {
+    name: "PublicTrips",
+
+    components: {},
+
+    data: () => {
+      return {
+        user: null,
+        loading: false,
+        trips: null,
+        limit: 1,
+        page: 1
+      };
+    },
+
+    computed: {
+      loggedUser() {
+        if (this.$store.getters.isAuthenticated) {
+          return this.$store.getters.loggedUser;
+        } else {
+          return false;
+        }
+      }
+    },
+
+    methods: {
+
+      goTo: function(page) {
+        this.fetchTrips(page);
+      },
+
+      fetchTrips: async function(page) {
+        this.user = this.$store.getters.loggedUser;
+        this.loading = true;
+        const { data } = await this.$store.dispatch("getTrips", {
+          query: `user=${this.user.id}`
+        });
+        this.trips = sortTrips(data);
+        this.loading = false;
+        console.log(this.trips);
+      },
+      
+      countTrips: async function() {
+        const count = await axios.get(
+          "https://dev-tripadlowcost.herokuapp.com/voyages/count"
+        );
+        this.limit = Math.trunc(count.data / 12) + 1;
+      }
+    },
+
+    mounted: async function() {
+      this.countTrips();
+      this.fetchTrips();
+    }
+  };
 </script>
 
 
 <style scoped>
-.trunc {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+  .trunc {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 </style>

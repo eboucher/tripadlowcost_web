@@ -48,7 +48,7 @@
             <v-list-item to='/trips/user-trips'>
               <v-list-item-title> My trips </v-list-item-title>
             </v-list-item>
-            <v-list-item to='/trips'>
+            <v-list-item to='/profile/edit-profile'>
               <v-list-item-title> Settings </v-list-item-title>
             </v-list-item>
             <v-list-item>

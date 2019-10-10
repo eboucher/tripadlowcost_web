@@ -8,33 +8,63 @@
         cols="12"
         md="4"
       >
-        <v-avatar
+        <v-col
+          cols="12"
+          md="8"
+        >
+        <v-avatar 
+          v-if="user.picture"
           slot="offset"
           class="mx-auto d-block elevation-6"
           size="230"
         >
-          <img
-            src="http://barnesjewishblog.org/wp-content/uploads/2011/03/male-smiling.jpg"
-          >
+          <img :src="user.picture.url">
+        </v-avatar>
+        <v-avatar 
+          v-else
+          slot="offset"
+          class="mx-auto d-block elevation-6"
+          size="230"
+        >
+          <img src="http://barnesjewishblog.org/wp-content/uploads/2011/03/male-smiling.jpg">
         </v-avatar>
         <v-card-text class="headline text-center">
-          <p class="font-weight-black">{{ loggedUser.username }}</p>
+          <p class="font-weight-black">{{ user.username }}</p>
         </v-card-text>
         <v-card-text class="text-center">
-          {{ loggedUser.firstname + " " + loggedUser.lastname }}
+          {{ user.firstname + " " + user.lastname }}
         </v-card-text>
         <v-card-text class="text-center">
-            {{ "Email: " + loggedUser.email }}
+            {{ "Email: " + user.email }}
         </v-card-text>
-        <strong>Interests:</strong><br>
-        <v-chip
-          v-for="key in user.interests"
-          v-if="key"
-          :key="key.id"
-          class="ma-2"
+        </v-col>
+        <v-col
+          cols="8"
         >
-          {{ key.tag }}
-        </v-chip>
+          <strong>Interests:</strong><br>
+          <v-row
+            rows="4"
+            class="text-xs-center"
+          >
+              <v-chip
+                v-for="key in user.interests"
+                v-if="key"
+                :key="key.id"
+                class="ma-2"
+              >
+                {{ key.tag }}
+              </v-chip>
+          </v-row>
+        </v-col>
+
+        <v-col
+          cols="10"
+          class="text-right"
+        >
+          <v-btn color="success">
+            Edit Profile
+          </v-btn>
+        </v-col>
       </v-col>
       <v-col
         cols="12"
@@ -165,21 +195,11 @@
     },
 
     computed: {
-      isAuthenticated() {
-        return this.$store.getters.isAuthenticated;
-      },
-
-      loggedUser() {
-        if (this.$store.getters.isAuthenticated) {
-          return this.$store.getters.loggedUser;
-        } else {
-          return false;
-        }
-      }
+      
     },
 
     mounted: async function() {
-      this.user = this.$store.getters.fullUser;
+      this.user = this.$store.getters.fullUser.data;
     }
   };
 </script>

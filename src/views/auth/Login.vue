@@ -65,9 +65,7 @@
         username: '',
         password: '',
         error: null,
-        
         show: false,
-        password: '',
         rules: {
           required: value => !!value || 'Required',
         },

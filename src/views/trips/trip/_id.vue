@@ -94,7 +94,7 @@ export default {
       const { data } = await this.$store.dispatch("getTrips", {
         query: `user=${this.user.id}`
       });
-      this.trip = data[0];
+      this.trip = this.$route.query.trip;
     },
       async deleteTrip(){
         this.$router.push('/trips')
