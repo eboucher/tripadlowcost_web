@@ -20,63 +20,63 @@
 </template>
 
 <script>
-export default {
-  name: "Home",
-  data: () => {
-    return {
-      trips: null,
-      suggested: null,
-      items: [
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg"
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg"
-        },
-        {
-          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
-        }
-      ]
-    };
-  },
-
-  computed: {
-    isAuthenticated() {
-      return this.$store.getters.isAuthenticated;
+  export default {
+    name: "Home",
+    data: () => {
+      return {
+        trips: null,
+        suggested: null,
+        items: [
+          {
+            src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"
+          },
+          {
+            src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg"
+          },
+          {
+            src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg"
+          },
+          {
+            src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
+          }
+        ]
+      };
     },
 
-    loggedUser() {
-      if (this.$store.getters.isAuthenticated) {
-        return this.$store.getters.loggedUser;
-      } else {
-        return false;
+    computed: {
+      isAuthenticated() {
+        return this.$store.getters.isAuthenticated;
+      },
+
+      loggedUser() {
+        if (this.$store.getters.isAuthenticated) {
+          return this.$store.getters.loggedUser;
+        } else {
+          return false;
+        }
+      }
+    },
+
+    mounted: async function() {
+      const { data } = await this.$store.dispatch("getTrips", {
+        query: "_start=0&_limit=12&_sort=created_at:DESC"
+      });
+      this.trips = data.filter(trip => trip.picture != undefined);
+      console.log(this.trips.filter(trip => trip.picture != undefined));
+
+      if (
+        this.$store.getters.loggedUser &&
+        this.$store.getters.loggedUser.interests
+      ) {
+        const user = this.$store.getters.loggedUser;
+        const query = user.interests
+          .map(interest => `interests.tag=${interest.tag}`)
+          .join("&");
+        const suggested = await this.$store.dispatch("getTrips", {
+          query: `/voyages?${query}&_limit=5`
+        });
+        this.suggested = suggested.data;
       }
     }
-  },
-
-  mounted: async function() {
-    const { data } = await this.$store.dispatch("getTrips", {
-      query: "_start=0&_limit=12&_sort=created_at:DESC"
-    });
-    this.trips = data.filter(trip => trip.picture != undefined);
-    console.log(this.trips.filter(trip => trip.picture != undefined));
-
-    if (
-      this.$store.getters.loggedUser &&
-      this.$store.getters.loggedUser.interests
-    ) {
-      const user = this.$store.getters.loggedUser;
-      const query = user.interests
-        .map(interest => `interests.tag=${interest.tag}`)
-        .join("&");
-      const suggested = await this.$store.dispatch("getTrips", {
-        query: `/voyages?${query}&_limit=5`
-      });
-      this.suggested = suggested.data;
-    }
-  }
-};
+  };
 </script>

@@ -88,8 +88,8 @@ export default new Router({
         import("./views/profile/Profile.vue"),
       children: [
         {
-          path: "user-profile",
-          name: "UserProfile",
+          path: ":user-profile",
+          name: ":UserProfile",
           component: () => import("./views/profile/_id.vue"),
         },
         {
