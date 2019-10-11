@@ -54,10 +54,55 @@ export default new Router({
         import("./views/auth/Login.vue")
     },
     {
+      path: "/trips",
+      name: "trips",
+      component: () => import("./views/trips/Trips.vue"),
+      children: [
+        {
+          path: "public-trips",
+          name: "PublicTrips",
+          component: () => import("./views/trips/PublicTrips.vue"),
+        },
+        {
+          path: "user-trips",
+          name: "UserTrips",
+          component: () => import("./views/trips/UserTrips.vue"),
+        },
+        {
+          path: ":id",
+          name: ":id",
+          component: () => import("./views/trips/trip/_id.vue"),
+        },
+        // this should be a child of :id, I just didn't figure out to make the route in less than 2 minutes
+        {
+          path: ":eid",
+          name: ":eid",
+          component: () => import("./views/trips/trip/stage/_eid.vue"),
+        }
+      ]
+    },
+    {
       path: "/post",
       name: "post",
       component: () =>
         import("./views/trips/Post.vue")
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: () => import("./views/profile/Profile.vue"),
+      children: [
+        {
+          path: ":user-profile",
+          name: ":UserProfile",
+          component: () => import("./views/profile/_id.vue"),
+        },
+        {
+          path: "edit-profile",
+          name: "EditProfile",
+          component: () => import("./views/profile/EditProfile.vue"),
+        }
+      ]
     }
   ],
 });

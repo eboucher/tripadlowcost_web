@@ -8,7 +8,7 @@
         <v-text-field
           v-model="username"
           :counter="10"
-          :rules="[nameRules, rules.required]"
+          :rules="rules.required"
           label="Username"
           required
         ></v-text-field>

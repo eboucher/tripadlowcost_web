@@ -65,9 +65,7 @@
         username: '',
         password: '',
         error: null,
-        
         show: false,
-        password: '',
         rules: {
           required: value => !!value || 'Required',
         },
@@ -75,13 +73,16 @@
     },
 
     methods: {
-      login() {
-        this.$store.dispatch("login", {
+      async login() {
+        await this.$store.dispatch("login", {
           username: this.username,
           password: this.password
         });
+        console.log("Token = " + this.$store.getters.getJWT);
+        this.$store.dispatch("getUser", this.$store.getters.getJWT);
         
-        this.$router.push({ name: "Home" });
+        this.$router.push({ name: "home" });
+        
       },
 
       reset() {

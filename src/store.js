@@ -9,30 +9,52 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 
   state: {
-    token: null
+    token: null,
+    user: null
   },
   
   mutations: {
     setToken(state, token) {
       state.token = token;
+      this.getJWT = token.data.jwt;
+    },
+    setUser(state, user) {
+      state.user = user;
     }
   },
 
   actions: {
     async login({commit, state}, userInfos) {
 
-      axios.post(`https://dev-tripadlowcost.herokuapp.com/auth/local`, {
+      await axios.post(`https://dev-tripadlowcost.herokuapp.com/auth/local`, {
         identifier: userInfos.username,
         password: userInfos.password
       }).then(response => {
+        console.log(response);
         commit('setToken', response);
+      })
+    },
+    
+    async logout({commit,state}) {
+      commit('setToken', null);
+      commit('setUser',null)
+    },
+
+    async getUser({commit, state}, jwt) {
+
+      await axios.get(`https://dev-tripadlowcost.herokuapp.com/users/me`, {
+          headers: {
+            Authorization: "bearer " + jwt,
+          }
+      }).then(response => {
+        commit('setUser', response);
       })
     },
     
     async register({commit, state}, userInfos) {
 
       axios.post(`https://dev-tripadlowcost.herokuapp.com/auth/local/register`, {
-        identifier: userInfos.username,
+        username: userInfos.username,
         firstname: userInfos.firstname,
         lastname: userInfos.lastname,
         email: userInfos.email,
@@ -41,6 +63,39 @@ export default new Vuex.Store({
         phone: userInfos.phone
       }).then(response => {
         commit('setToken', response);
+      })
+    },
+    
+    async getTrips() {
+      return await axios.get(`https://dev-tripadlowcost.herokuapp.com/voyages/`);
+    },
+    
+    async createTrip({commit, state}, tripInfos) {
+      const newTrip = await axios.post('https://dev-tripadlowcost.herokuapp.com/voyages', {
+        title: tripInfos.title,
+        start: tripInfos.start,
+        end: tripInfos.end,
+        description: tripInfos.description,
+        close: false
+      },
+      {
+        headers: {
+          Authorization: "bearer " + tripInfos.jwt,
+        }
+      })
+      return newTrip;
+    },
+
+    async uploadImage({commit, state}, formData) {
+      await axios.post(`https://dev-tripadlowcost.herokuapp.com/upload`,
+        formData, 
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: "bearer " + this.getJWT
+          }
+        }).then(response => {
+          commit('setToken', response);
       })
     }
   },
@@ -52,6 +107,18 @@ export default new Vuex.Store({
 
     loggedUser: (state) => {
       return state.token.data.user;
+    },
+
+    fullUser: (state) => {
+      return state.user.data;
+    },
+
+    getUsername: (state) => {
+      return state.token.data.username;
+    },
+
+    getJWT: (state) => {
+      return state.token.data.jwt;
     }
   }
 });
