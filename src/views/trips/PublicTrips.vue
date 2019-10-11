@@ -88,4 +88,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  li a {
+    text-decoration: none;
+  }
 </style>

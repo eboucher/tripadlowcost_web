@@ -52,6 +52,26 @@
           >
           <v-icon left>mdi-pencil</v-icon> Edit
         </v-btn>
+        <v-timeline>
+          <v-timeline-item
+            v-for="stage in this.trip.etapes"
+            :key="stage.id"
+            color="red lighten-2"
+            large
+          >
+            <template v-slot:opposite>
+              <span>{{ formatDate(stage.start) }}</span>
+            </template>
+            <router-link :to="'/trips/' + trip.id + '/' + stage.id">
+            <v-card class="elevation-2">
+              <v-card-title class="headline">{{ stage.title }}</v-card-title>
+              <v-card-text>
+                {{ stage.comment }}
+              </v-card-text>
+            </v-card>
+            </router-link>
+          </v-timeline-item>
+        </v-timeline>
       </v-flex>
     </v-layout>
   </v-container>
