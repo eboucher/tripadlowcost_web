@@ -70,135 +70,79 @@
         cols="12"
         md="8"
       >
-          <v-form>
-            <v-container class="py-0">
-              <v-row>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Company (disabled)"
-                    disabled
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    label="User Name"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Email Address"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    label="First Name"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    label="Last Name"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-text-field
-                    label="Adress"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="City"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Country"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    class="purple-input"
-                    label="Postal Code"
-                    type="number"
-                  />
-                </v-col>
-
-                <v-col cols="12">
-                  <v-textarea
-                    class="purple-input"
-                    label="About Me"
-                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-                  />
-                </v-col>
-
-                <v-col
-                  cols="12"
-                  class="text-right"
-                >
-                  <v-btn color="success">
-                    Update Profile
-                  </v-btn>
-                </v-col>
-              </v-row>
+          <v-layout align-center justify-center column>   
+          <v-card-text class="headline text-center">
+            <p class="font-weight-black"> {{ user.username }} trips </p>
+          </v-card-text>  
+            <v-container grid-list-xl>
+              <v-layout v-bind="binding" v-for="(item, index) in user.voyages" :key="index">
+                <li><router-link :to="{ path: '/trips/' + item.id, query:{trip:trips[item.id]} }">
+                  <v-flex xs2>
+                    <v-img
+                      v-if="item.picture"
+                      class="white--text"
+                      height="400px"
+                      width="7000px"
+                      :src="item.picture.url"
+                    >
+                    </v-img>
+                    <v-card-title class="align-end fill-height"> {{ item.title }} </v-card-title>
+                    <v-card-text class="trunc"> {{ item.description }} </v-card-text>
+                  </v-flex>
+                </router-link></li>
+              </v-layout>
             </v-container>
-          </v-form>
+          </v-layout>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
+
+  function sortTrips(array) {
+      var result = {};
+      array.forEach(function(trip) {
+          result[trip.id] = trip;
+      });
+      return result;
+  }
+
   export default {
     name: "UserProfile",
     data: () => {
       return {
         user: null,
+        loading: false,
+        trips: null,
       };
     },
 
-    computed: {
+    computed: {},
+
+    methods: {
+
+      fetchTrips: async function(page) {
+        this.user = this.$store.getters.loggedUser;
+        this.loading = true;
+        const { data } = await this.$store.dispatch("getTrips", {
+          query: `user=${this.user.id}`
+        });
+        this.trips = sortTrips(data);
+        this.loading = false;
+        console.log(this.trips);
+      },
       
+      countTrips: async function() {
+        const count = await axios.get(
+          "https://dev-tripadlowcost.herokuapp.com/voyages/count"
+        );
+        this.limit = Math.trunc(count.data / 12) + 1;
+      }
     },
 
     mounted: async function() {
+      this.fetchTrips();
       this.user = this.$store.getters.fullUser.data;
     }
   };
@@ -209,3 +153,12 @@
     margin-top: 0.55rem;
     margin-right: 0.2rem;
   }
+
+  .v-input__slider {
+    width: 100%;
+  }
+
+  li a {
+    text-decoration: none;
+  }
+</style>
