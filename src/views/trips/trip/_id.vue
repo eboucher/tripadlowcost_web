@@ -19,9 +19,9 @@
           <v-card-text class="subtitle-2"> 
             {{ this.trip.description }}
           </v-card-text>
-        <p>Author : <router-link :to="'/profile/' + this.trip.user.id">{{ this.trip.user.username }}
-        </router-link>
-        </p>
+          <v-card-text class="title"> 
+            {{ "Author: " + this.trip.user.username }}
+          </v-card-text>
         <div>
           {{ this.likes }}
           <v-btn

@@ -54,7 +54,6 @@
         query: "_start=0&_limit=12&_sort=created_at:DESC"
       });
       this.trips = data.filter(trip => trip.picture != undefined);
-      console.log(this.trips.filter(trip => trip.picture != undefined));
 
       if (this.$store.getters.fullUser &&
         this.$store.getters.fullUser.interests) 

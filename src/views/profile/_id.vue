@@ -61,8 +61,7 @@
           cols="10"
           class="text-right"
         >
-          <v-btn 
-          to='/profile/edit-profile' 
+          <v-btn
           color="success"
           @click.native="editProfile">
             Edit Profile
@@ -74,9 +73,9 @@
         md="8"
       >
           <v-layout align-center justify-center column>   
-          <v-card-text class="headline text-center">
-            <p class="font-weight-black"> {{ user.username }} trips </p>
-          </v-card-text>  
+            <v-card-text class="headline text-center">
+              <p class="font-weight-black"> {{ user.username }} trips </p>
+            </v-card-text>  
             <v-container grid-list-xl>
               <v-layout v-bind="binding" v-for="(item, index) in user.voyages" :key="index">
                 <li><router-link :to="{ path: '/trips/' + item.id, query:{trip:trips[item.id]} }">
