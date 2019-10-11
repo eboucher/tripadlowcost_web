@@ -143,7 +143,7 @@
 
     mounted: async function() {
       this.fetchTrips();
-      this.user = this.$store.getters.fullUser.data;
+      this.user = this.$store.getters.fullUser;
     }
   };
 </script>

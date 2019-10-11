@@ -110,7 +110,7 @@ export default new Vuex.Store({
     },
 
     fullUser: (state) => {
-      return state.user;
+      return state.user.data;
     },
 
     getUsername: (state) => {

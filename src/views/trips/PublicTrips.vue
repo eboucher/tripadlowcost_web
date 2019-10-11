@@ -6,17 +6,19 @@
     </v-row>
     <v-row v-else>
       <v-col v-for="(item, index) in trips" :key="index" cols="3">
-        <v-card max-width="344" class="mx-auto">
-          <v-card-title>{{ item.title }}</v-card-title>
-          <v-img v-if="item.picture" class="white--text" height="200px" :src="item.picture.url"></v-img>
-          <v-img
-            v-else
-            class="white--text"
-            height="200px"
-            src="https://webhostingmedia.net/wp-content/uploads/2018/01/http-error-404-not-found.png"
-          ></v-img>
-          <v-card-text class="trunc">{{item.description}}</v-card-text>
-        </v-card>
+        <li><router-link :to="{ path: '/trips/' + item.id, query:{trip:trips[item.id]} }">
+          <v-card max-width="344" class="mx-auto">
+            <v-card-title>{{ item.title }}</v-card-title>
+            <v-img v-if="item.picture" class="white--text" height="200px" :src="item.picture.url"></v-img>
+            <v-img
+              v-else
+              class="white--text"
+              height="200px"
+              src="https://webhostingmedia.net/wp-content/uploads/2018/01/http-error-404-not-found.png"
+            ></v-img>
+            <v-card-text class="trunc">{{item.description}}</v-card-text>
+          </v-card>
+        </router-link></li>
       </v-col>
     </v-row>
     <v-row>
@@ -26,9 +28,17 @@
 </template>
 
 <script>
-import axios from "axios";
+  import axios from "axios";
 
-export default {
+  function sortTrips(array) {
+      var result = {};
+      array.forEach(function(trip) {
+          result[trip.id] = trip;
+      });
+      return result;
+  }
+
+  export default {
   name: "PublicTrips",
 
   components: {},
@@ -53,9 +63,8 @@ export default {
       const { data } = await this.$store.dispatch("getTrips", {
         query: `_start=${(this.page - 1) * 12}&_limit=12&_sort=created_at:DESC`
       });
-      this.trips = data;
+      this.trips = sortTrips(data);
       this.loading = false;
-      console.log(this.trips);
     },
     countTrips: async function() {
       const count = await axios.get(
