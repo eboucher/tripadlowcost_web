@@ -6,7 +6,7 @@
     </v-row>
     <v-row v-else>
       <v-col v-for="(item, index) in trips" :key="index" cols="3">
-        <li><router-link :to="{ path: '/trips/' + item.id, query:{trip:trips[item.id]} }">
+        <li><router-link :to="{ path: '/trips/' + item.id, query: {trip: trips[item.id]} }">
           <v-card max-width="344" class="mx-auto">
             <v-card-title>{{ item.title }}</v-card-title>
             <v-img v-if="item.picture" class="white--text" height="200px" :src="item.picture.url"></v-img>

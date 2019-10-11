@@ -73,6 +73,12 @@ export default new Router({
           name: ":id",
           component: () => import("./views/trips/trip/_id.vue"),
         },
+        // this should be a child of :id, I just didn't figure out to make the route in less than 2 minutes
+        {
+          path: ":eid",
+          name: ":eid",
+          component: () => import("./views/trips/trip/stage/_eid.vue"),
+        }
       ]
     },
     {
@@ -84,8 +90,7 @@ export default new Router({
     {
       path: "/profile",
       name: "profile",
-      component: () =>
-        import("./views/profile/Profile.vue"),
+      component: () => import("./views/profile/Profile.vue"),
       children: [
         {
           path: ":user-profile",

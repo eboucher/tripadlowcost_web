@@ -1,54 +1,137 @@
 <template>
-  <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-xs-center">
-        <h1>{{ this.etape.title }}</h1>
-        <v-carousel v-if="etape.pictures.length > 0"
-        max="500">
-          <v-carousel-item
-            v-for="(item,i) in etape.pictures"
-            :key="i"
-            :src="item.url"
-            contain
-          height="500px"
-          width="1000px"
-          ></v-carousel-item>
-        </v-carousel>
-      </div>
-    </v-flex>
-      <v-divider></v-divider>
-      <v-rating v-model="etape.mark" :readonly=true></v-rating> {{ this.formatDate(etape.start) }}
-      <v-divider></v-divider>
-    <v-flex xs12 sm8 md6>
-      <div class="container">
-        <p> {{ etape.comment }} </p>
-      </div>
-    </v-flex>
-  </v-layout>
+  <v-container align-content-center>
+    <v-layout row wrap>
+      <v-flex xs6 offset-xs3>
+        <p xs6 offset-xs3 class="align-center">{{ this.trip.title }}</p>
+        <v-img
+          :src="this.trip.picture.url"
+          aspect-ratio="1"
+          class="grey lighten-2"
+          max-width="1000"
+          max-height="500"
+        >
+        </v-img>
+        <div class="text-xs-center" >
+          <p>{{formatDate(this.trip.start)}} || {{formatDate(this.trip.end)}}</p>
+        </div>
+        <p> {{ this.trip.description }} </p>
+        <p>Author : <router-link :to="'/profile/' + this.trip.user.id">{{ this.trip.user.username }}
+        </router-link>
+        </p>
+        <div>
+          {{ this.likes }}
+          <v-btn
+          v-if="loggedUser"
+          v-on:click.native="like"
+          class="ma-2" 
+          text 
+          icon 
+          color="blue lighten-2">
+            <v-icon>mdi-thumb-up</v-icon>
+          </v-btn>
+
+          <v-btn
+          v-if="loggedUser"
+          v-on:click.native="unlike"
+          class="ma-2" 
+          text 
+          icon 
+          color="red lighten-2">
+            <v-icon>mdi-thumb-down</v-icon>
+          </v-btn>
+        </div>
+
+        <v-btn v-if="loggedUser.id === this.trip.user.id" v-on:click.native="deleteTrip" color="error">Delete</v-btn>
+        <v-btn
+            v-if="loggedUser.id === this.trip.user.id"
+          class="ma-2" 
+          tile 
+          outlined 
+          color="success" 
+          :to="'/trips/' + this.trip.id + '/edit'"
+          >
+          <v-icon left>mdi-pencil</v-icon> Edit
+        </v-btn>
+        <v-timeline>
+          <v-timeline-item
+            v-for="stage in this.trip.etapes"
+            :key="stage.id"
+            color="red lighten-2"
+            large
+          >
+            <template v-slot:opposite>
+              <span>{{ formatDate(stage.start) }}</span>
+            </template>
+            <router-link :to="'/trips/' + trip.id + '/' + stage.id">
+            <v-card class="elevation-2">
+              <v-card-title class="headline">{{ stage.title }}</v-card-title>
+              <v-card-text>
+                {{ stage.comment }}
+              </v-card-text>
+            </v-card>
+            </router-link>
+          </v-timeline-item>
+        </v-timeline>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
-    export default {
-        name: "_eid",
-      middleware: 'auth',
-      asyncData({ app, params }) {
-        return app.$axios.get(`/etapes/${params.eid}`)
-          .then(res => {
-            return {
-              etape : res.data,
-              id: params.id,
-              eid: params.id
-            }
-          })
-      },
-      methods: {
-        formatDate(date) {
-          const fullDate = new Date(date)
-          const year = fullDate.getFullYear()
-          const month = fullDate.getMonth() + 1
-          const day = fullDate.getDate()
-          return `${day}/${month}/${year}`
-        }
+export default {
+
+  data: () => {
+    return {
+      user: null,
+      trip: null
+    };
+  },
+
+  computed: {
+    loggedUser() {
+      if (this.$store.getters.isAuthenticated) {
+        return this.$store.getters.loggedUser;
+      } else {
+        return false;
       }
     }
+  },
+
+  methods: {
+    fetchStage: async function() {
+      this.user = this.$store.getters.loggedUser;
+      const { data } = await this.$store.dispatch("getTrips", {
+        query: `user=${this.user.id}`
+      });
+      this.trip = this.$route.query.trip;
+    },
+      async deleteTrip() {
+        this.$router.push('/trips')
+      },
+      async unlike() {
+      },
+      async like() {
+      },
+      formatDate(date) {
+        const fullDate = new Date(date)
+        const year = fullDate.getFullYear()
+        const month = fullDate.getMonth() + 1
+        const day = fullDate.getDate()
+        return `${day}/${month}/${year}`
+      }
+  },
+
+  mounted: async function() {
+    this.fetchStage();
+    this.loggedUser();
+  }
+}
 </script>
+
+<style scoped>
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+</style>
