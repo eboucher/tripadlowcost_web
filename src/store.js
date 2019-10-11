@@ -34,6 +34,11 @@ export default new Vuex.Store({
         commit('setToken', response);
       })
     },
+    
+    async logout({commit,state}) {
+      commit('setToken', null);
+      commit('setUser',null)
+    },
 
     async getUser({commit, state}, jwt) {
 

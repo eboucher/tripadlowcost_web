@@ -51,8 +51,8 @@
             <v-list-item to='/profile/edit-profile'>
               <v-list-item-title> Settings </v-list-item-title>
             </v-list-item>
-            <v-list-item>
-              <v-list-item-title> Log out </v-list-item-title>
+            <v-list-item to='/login'>
+              <v-list-item-title @click="logout"> Log out </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -85,7 +85,7 @@
 
     methods: {
       async logout() {
-        await this.$auth.logout();
+        await this.$store.dispatch("logout", null);
       },
       trigger() {
         this.$router.push(`/trips/search?query=${this.search}`)

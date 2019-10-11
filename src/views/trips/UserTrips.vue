@@ -37,6 +37,7 @@
       });
       return result;
   }
+  
   export default {
     name: "PublicTrips",
 

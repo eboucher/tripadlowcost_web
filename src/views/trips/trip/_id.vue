@@ -1,59 +1,58 @@
 <template>
   <v-container align-content-center>
     <v-layout row wrap>
-        <v-flex xs6 offset-xs3>
-          <p xs6 offset-xs3 class="align-center">{{ this.trip.title }}</p>
-          <v-img
-            :src="this.trip.picture.url"
-            aspect-ratio="1"
-            class="grey lighten-2"
-            max-width="1000"
-            max-height="500"
-          >
-          </v-img>
-          <div class="text-xs-center" >
-            <p>{{formatDate(this.trip.start)}} || {{formatDate(this.trip.end)}}</p>
-          </div>
-          <p>
-          <p> {{ this.trip.description }} </p>
-          <p>Author : <router-link :to="'/profile/' + this.trip.user.id">{{ this.trip.user.username }}
-          </router-link>
-          </p>
-          <div>
-            {{ this.likes }}
-            <v-btn
-            v-if="loggedUser"
-            v-on:click.native="like"
-            class="ma-2" 
-            text 
-            icon 
-            color="blue lighten-2">
-              <v-icon>mdi-thumb-up</v-icon>
-            </v-btn>
-
-            <v-btn
-            v-if="loggedUser"
-            v-on:click.native="unlike"
-            class="ma-2" 
-            text 
-            icon 
-            color="red lighten-2">
-              <v-icon>mdi-thumb-down</v-icon>
-            </v-btn>
-          </div>
-
-          <v-btn v-if="loggedUser.id === this.trip.user.id" v-on:click.native="deleteTrip" color="error">Delete</v-btn>
+      <v-flex xs6 offset-xs3>
+        <p xs6 offset-xs3 class="align-center">{{ this.trip.title }}</p>
+        <v-img
+          :src="this.trip.picture.url"
+          aspect-ratio="1"
+          class="grey lighten-2"
+          max-width="1000"
+          max-height="500"
+        >
+        </v-img>
+        <div class="text-xs-center" >
+          <p>{{formatDate(this.trip.start)}} || {{formatDate(this.trip.end)}}</p>
+        </div>
+        <p> {{ this.trip.description }} </p>
+        <p>Author : <router-link :to="'/profile/' + this.trip.user.id">{{ this.trip.user.username }}
+        </router-link>
+        </p>
+        <div>
+          {{ this.likes }}
           <v-btn
-             v-if="loggedUser.id === this.trip.user.id"
-            class="ma-2" 
-            tile 
-            outlined 
-            color="success" 
-            :to="'/trips/' + this.trip.id + '/edit'"
-            >
-            <v-icon left>mdi-pencil</v-icon> Edit
+          v-if="loggedUser"
+          v-on:click.native="like"
+          class="ma-2" 
+          text 
+          icon 
+          color="blue lighten-2">
+            <v-icon>mdi-thumb-up</v-icon>
           </v-btn>
-        </v-flex>
+
+          <v-btn
+          v-if="loggedUser"
+          v-on:click.native="unlike"
+          class="ma-2" 
+          text 
+          icon 
+          color="red lighten-2">
+            <v-icon>mdi-thumb-down</v-icon>
+          </v-btn>
+        </div>
+
+        <v-btn v-if="loggedUser.id === this.trip.user.id" v-on:click.native="deleteTrip" color="error">Delete</v-btn>
+        <v-btn
+            v-if="loggedUser.id === this.trip.user.id"
+          class="ma-2" 
+          tile 
+          outlined 
+          color="success" 
+          :to="'/trips/' + this.trip.id + '/edit'"
+          >
+          <v-icon left>mdi-pencil</v-icon> Edit
+        </v-btn>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -66,14 +65,6 @@ export default {
       user: null,
       trip: null
     };
-    if(this.thumbnail)
-      return {
-        picture: this.thumbnail.url
-      }
-    else
-      return {
-        picture: 'https://webhostingmedia.net/wp-content/uploads/2018/01/http-error-404-not-found.png'
-      }
   },
 
   computed: {
@@ -87,8 +78,6 @@ export default {
   },
 
   methods: {
-    // this fetchTrip method is not ok! IT'S ONLY FOR TESTING A TRIP
-    // BUT IT NEEDS TO BE MODIFIED
     fetchTrip: async function() {
       this.user = this.$store.getters.loggedUser;
       const { data } = await this.$store.dispatch("getTrips", {
