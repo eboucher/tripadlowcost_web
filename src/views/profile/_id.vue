@@ -61,7 +61,10 @@
           cols="10"
           class="text-right"
         >
-          <v-btn  to='/profile/edit-profile' color="success">
+          <v-btn 
+          to='/profile/edit-profile' 
+          color="success"
+          @click.native="editProfile">
             Edit Profile
           </v-btn>
         </v-col>
@@ -138,7 +141,11 @@
           "https://dev-tripadlowcost.herokuapp.com/voyages/count"
         );
         this.limit = Math.trunc(count.data / 12) + 1;
-      }
+      },
+
+      async editProfile() {
+        await this.$router.push("/profile/edit-profile");
+      },
     },
 
     mounted: async function() {

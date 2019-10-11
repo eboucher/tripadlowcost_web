@@ -117,7 +117,7 @@
         });
         this.trip = this.$route.query.trip;
       },
-        async deleteTrip(){
+        async deleteTrip() {
           this.$router.push('/trips')
         },
         async unlike() {

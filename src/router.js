@@ -98,7 +98,7 @@ export default new Router({
           component: () => import("./views/profile/_id.vue"),
         },
         {
-          path: 'edit-profile',
+          path: "edit-profile",
           name: "EditProfile",
           component: () => import("./views/profile/EditProfile.vue"),
         }

@@ -1,7 +1,7 @@
 <template>
   <v-container fluid grid-list-xl>
     <v-layout column align-center justify-space-around row fill-height>
-      <v-toolbar-title>Share your trip so that it can be discovered by TripadLowCost surfers</v-toolbar-title>
+      <v-toolbar-title class="display-1 text-center">Share your trip so that it can be discovered by TripadLowCost surfers</v-toolbar-title>
 
       <v-form
         ref="form"
