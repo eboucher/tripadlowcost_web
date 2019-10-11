@@ -2,7 +2,7 @@
   <v-container align-content-center>
     <v-layout row wrap>
       <v-flex xs6 offset-xs3>
-        <p xs6 offset-xs3 class="align-center">{{ this.trip.title }}</p>
+        <v-card-title class="display-2"> {{ this.trip.title }} </v-card-title>
         <v-img
           :src="this.trip.picture.url"
           aspect-ratio="1"
@@ -12,9 +12,13 @@
         >
         </v-img>
         <div class="text-xs-center" >
-          <p>{{formatDate(this.trip.start)}} || {{formatDate(this.trip.end)}}</p>
+          <v-card-title class="subtitle-1"> 
+            {{formatDate(this.trip.start)}} || {{formatDate(this.trip.end)}}
+          </v-card-title>
         </div>
-        <p> {{ this.trip.description }} </p>
+          <v-card-text class="subtitle-2"> 
+            {{ this.trip.description }}
+          </v-card-text>
         <p>Author : <router-link :to="'/profile/' + this.trip.user.id">{{ this.trip.user.username }}
         </router-link>
         </p>
@@ -60,9 +64,10 @@
             large
           >
             <template v-slot:opposite>
-              <span>{{ formatDate(stage.start) }}</span>
+              <span>{{  formatDate(stage.start) }}</span>
             </template>
-            <router-link :to="{ path: '/trips/' + trip.id + '/' + stage.id, query: {stage: trip.etapes[stage.id]} }">
+
+            <router-link :to="{ path: '/trips/' + trip.id + '/' + stage.id }">
             <v-card class="elevation-2">
               <v-card-title class="headline">{{ stage.title }}</v-card-title>
               <v-card-text> {{ stage.comment }} </v-card-text>

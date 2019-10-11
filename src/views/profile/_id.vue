@@ -28,13 +28,13 @@
         >
           <img src="http://barnesjewishblog.org/wp-content/uploads/2011/03/male-smiling.jpg">
         </v-avatar>
-        <v-card-text class="headline text-center">
+        <v-card-text class="display-2 text-center">
           <p class="font-weight-black">{{ user.username }}</p>
         </v-card-text>
-        <v-card-text class="text-center">
+        <v-card-text class="headline text-center">
           {{ user.firstname + " " + user.lastname }}
         </v-card-text>
-        <v-card-text class="text-center">
+        <v-card-text class="subtitle-1 text-center">
             {{ "Email: " + user.email }}
         </v-card-text>
         </v-col>
@@ -61,7 +61,7 @@
           cols="10"
           class="text-right"
         >
-          <v-btn color="success">
+          <v-btn  to='/profile/edit-profile' color="success">
             Edit Profile
           </v-btn>
         </v-col>

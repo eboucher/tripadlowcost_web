@@ -2,76 +2,7 @@
   <v-container align-content-center>
     <v-layout row wrap>
       <v-flex xs6 offset-xs3>
-        <p xs6 offset-xs3 class="align-center">{{ this.trip.title }}</p>
-        <v-img
-          :src="this.trip.picture.url"
-          aspect-ratio="1"
-          class="grey lighten-2"
-          max-width="1000"
-          max-height="500"
-        >
-        </v-img>
-        <div class="text-xs-center" >
-          <p>{{formatDate(this.trip.start)}} || {{formatDate(this.trip.end)}}</p>
-        </div>
-        <p> {{ this.trip.description }} </p>
-        <p>Author : <router-link :to="'/profile/' + this.trip.user.id">{{ this.trip.user.username }}
-        </router-link>
-        </p>
-        <div>
-          {{ this.likes }}
-          <v-btn
-          v-if="loggedUser"
-          v-on:click.native="like"
-          class="ma-2" 
-          text 
-          icon 
-          color="blue lighten-2">
-            <v-icon>mdi-thumb-up</v-icon>
-          </v-btn>
-
-          <v-btn
-          v-if="loggedUser"
-          v-on:click.native="unlike"
-          class="ma-2" 
-          text 
-          icon 
-          color="red lighten-2">
-            <v-icon>mdi-thumb-down</v-icon>
-          </v-btn>
-        </div>
-
-        <v-btn v-if="loggedUser.id === this.trip.user.id" v-on:click.native="deleteTrip" color="error">Delete</v-btn>
-        <v-btn
-            v-if="loggedUser.id === this.trip.user.id"
-          class="ma-2" 
-          tile 
-          outlined 
-          color="success" 
-          :to="'/trips/' + this.trip.id + '/edit'"
-          >
-          <v-icon left>mdi-pencil</v-icon> Edit
-        </v-btn>
-        <v-timeline>
-          <v-timeline-item
-            v-for="stage in this.trip.etapes"
-            :key="stage.id"
-            color="red lighten-2"
-            large
-          >
-            <template v-slot:opposite>
-              <span>{{ formatDate(stage.start) }}</span>
-            </template>
-            <router-link :to="'/trips/' + trip.id + '/' + stage.id">
-            <v-card class="elevation-2">
-              <v-card-title class="headline">{{ stage.title }}</v-card-title>
-              <v-card-text>
-                {{ stage.comment }}
-              </v-card-text>
-            </v-card>
-            </router-link>
-          </v-timeline-item>
-        </v-timeline>
+        <p xs6 offset-xs3 class="align-center">{{ this.stage.title }}</p>
       </v-flex>
     </v-layout>
   </v-container>
@@ -83,7 +14,8 @@ export default {
   data: () => {
     return {
       user: null,
-      trip: null
+      trip: null,
+      stage: null,
     };
   },
 
@@ -99,19 +31,8 @@ export default {
 
   methods: {
     fetchStage: async function() {
-      this.user = this.$store.getters.loggedUser;
-      const { data } = await this.$store.dispatch("getTrips", {
-        query: `user=${this.user.id}`
-      });
-      this.trip = this.$route.query.trip;
+      this.stage = this.$route.query.stage;
     },
-      async deleteTrip() {
-        this.$router.push('/trips')
-      },
-      async unlike() {
-      },
-      async like() {
-      },
       formatDate(date) {
         const fullDate = new Date(date)
         const year = fullDate.getFullYear()
